@@ -18,23 +18,17 @@
         <listener-class>Utils.Helper</listener-class>
     </listener>
     <servlet>
-        <servlet-name>Login</servlet-name>
+        <servlet-name>Controller</servlet-name>
         <servlet-class>Controller.Controller</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Login</servlet-name>
-        <url-pattern>/Login</url-pattern>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>
     </session-config>
-    
-<context-parm>
-        <param-name>log</param-name>
-        <parm-value>E</parm-value>
-    
-        M
-    </context-parm>
+  
     
     
     </web-app>
