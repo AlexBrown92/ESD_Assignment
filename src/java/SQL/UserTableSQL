@@ -1,0 +1,5 @@
+create table User (
+	ID int primary key auto_increment not null
+	,UserName varchar(50) 
+	,Password varchar(50)
+);
