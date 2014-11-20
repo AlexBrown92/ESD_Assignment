@@ -29,10 +29,19 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Model.User usr = new Model.User();
-        usr.findUser("doctor", "doctor");
-        request.setAttribute("user", usr);
-        request.getRequestDispatcher("index.html");
+   
+       String url = request.getRequestURI().substring(request.getContextPath().length());
+        
+       switch(url){
+           case "/Login":
+               request = Business.User.Login(request);
+               break;
+           case "/Logout":
+               request = Business.User.Logout(request);
+               break;
+       }
+       
+       request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
