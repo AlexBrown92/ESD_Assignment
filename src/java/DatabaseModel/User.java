@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DatabaseModel;
 
+import Utils.DBA;
 import Utils.Helper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,11 +46,19 @@ public class User {
         this.password = password;
     }
     
+    /***
+     * given a username and password will return a user object with the values if found
+     * @param username
+     * @param password
+     * @return 
+     */
     public User findUser(String username, String password){
         String query = "SELECT * FROM User WHERE UserName = '%s' AND password = '%s'";
+        DBA dba  = Helper.getDBA();
         
         try{
-            ResultSet rs = Helper.getDBA().executeQuery(String.format(query, username, password));
+           
+            ResultSet rs = dba.executeQuery(String.format(query, username, password));
        
             while(rs.next()){
                 this.ID = rs.getInt("ID");
@@ -62,8 +66,10 @@ public class User {
                 this.password = rs.getString("Password");
             }
             rs.close();
+            dba.closeConnections();
             
         } catch (SQLException sqlEx){
+            dba.closeConnections();
             Helper.logException(sqlEx);
         }
         

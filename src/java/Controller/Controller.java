@@ -24,9 +24,10 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
+       //Finds which page made the request 
        String url = request.getRequestURI().substring(request.getContextPath().length());
         
+       //Chooses which business object is responsible for the interaction
        switch(url){
            case "/Login":
                request = Business.User.Login(request);
@@ -36,6 +37,7 @@ public class Controller extends HttpServlet {
                break;
        }
        
+
        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 

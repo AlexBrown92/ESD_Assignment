@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Utils;
 
 import java.sql.Connection;
@@ -30,12 +25,23 @@ public class DBA {
     private Connection connection;
     private Statement statement;
 
+    /***
+     * DBA constructor
+     * @param database
+     * @param databaseUser
+     * @param databasePassword 
+     */
     public DBA(String database, String databaseUser, String databasePassword) {
         this.database = database;
         this.databaseUser = databaseUser;
         this.databasePassword = databasePassword;
     }
 
+    /***
+     * given an SQL query will execute and then return the resultset 
+     * @param sql
+     * @return 
+     */
     public ResultSet executeQuery(String sql) {
         ResultSet rs = null;
         closeConnections(); 
@@ -65,6 +71,9 @@ public class DBA {
         return rs;
     }
 
+    /***
+     * Will try to terminate connections to the database if possible 
+     */
     public void closeConnections() {
         try {
 

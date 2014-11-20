@@ -19,10 +19,18 @@ public class Helper implements ServletContextListener {
     private static String databasePassword;
     private static String filePath;
 
+    /***
+     * Creates a new DBA object 
+     * @return 
+     */
     public static DBA getDBA() {
         return new DBA(database, databaseUser, databasePassword);
     }
 
+    /***
+     * Will record any exceptions thrown on the server in the file "exceptionsLog"
+     * @param ex 
+     */
     public static void logException(Exception ex) {
         try {
             File exLog = new File(filePath);
@@ -36,13 +44,14 @@ public class Helper implements ServletContextListener {
         }
     }
 
+    
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         database = sce.getServletContext().getInitParameter("db");
         databaseUser = sce.getServletContext().getInitParameter("dbUser");
         databasePassword = sce.getServletContext().getInitParameter("dbPassword");
         
-        filePath = sce.getServletContext().getRealPath( "/WEB-INF/exceptionLog.log");
+        filePath = sce.getServletContext().getRealPath("/WEB-INF/exceptionLog.log");
     }
 
     @Override
