@@ -19,7 +19,7 @@
     </listener>
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>Web.Controller</servlet-class>
+        <servlet-class>Controller.Controller</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -29,4 +29,13 @@
         <session-timeout>20</session-timeout>
     </session-config>
     
-</web-app>
+<context-parm>
+        <param-name>log</param-name>
+        <parm-value>E</parm-value>
+    
+        M
+    </context-parm>
+    
+    ESD_Assignment
+    
+    </web-app>
