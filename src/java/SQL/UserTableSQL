@@ -3,3 +3,6 @@ create table User (
 	,UserName varchar(50) 
 	,Password varchar(50)
 );
+
+insert into User(UserName, Password) 
+values ("doctor", "doctor");
