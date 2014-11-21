@@ -56,7 +56,7 @@
                     <%
                         String view;
 
-                        view = "/WEB-INF/jspf/listpatients.jsp";
+                        view = "/WEB-INF/jspf/listpatients.jspf";
                     %>  
 
                     <jsp:include page= "<%= view%>" />
