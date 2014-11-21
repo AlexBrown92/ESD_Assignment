@@ -3,7 +3,7 @@
       
     <context-param>
         <param-name>db</param-name>
-        <param-value>localhost:3306/ESD_Assignment</param-value>
+        <param-value>localhost:3306/esd_assignment</param-value>
     </context-param>
     <context-param>
         <param-name>dbUser</param-name>
@@ -23,7 +23,9 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/jspf/*</url-pattern>
+        <url-pattern>/login</url-pattern>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>
@@ -31,4 +33,4 @@
   
     
     
-    </web-app>
+</web-app>

@@ -1,0 +1,18 @@
+<li>
+    <a href="#">List all Patients</a>
+</li>
+<li>
+    <a href="#">List all Medicines</a>
+</li>
+<li>
+    <a href="#">Add new Bill</a>
+</li>
+<li>
+    <a href="#">Add new Patient</a>
+</li>
+<li>
+    <a href="#">Add new Medicine</a>
+</li>
+<li>
+    <a href="logout">Log out</a>
+</li>

@@ -1,0 +1,13 @@
+<form action="login" method="post"/>
+<li>
+    <label>User</label>
+    <input type="text" name="username"/>
+</li>
+<li>
+    <label>Password</label>
+    <input type="text" name="password"/>
+</li>
+<li>
+    <input type="submit" value="login"/>
+</li>
+</form> 
