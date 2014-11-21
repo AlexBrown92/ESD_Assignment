@@ -1,0 +1,114 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+
+-- -----------------------------------------------------
+-- Table `User`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `User` (
+  `UserID` INT NOT NULL ,
+  `Username` VARCHAR(45) NULL ,
+  `Password` VARCHAR(45) NULL ,
+  PRIMARY KEY (`UserID`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DeletedMedicine`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `DeletedMedicine` (
+  `MedicineID` INT NOT NULL ,
+  `RemovalDate` DATETIME NULL ,
+  PRIMARY KEY (`MedicineID`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Medicine`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `Medicine` (
+  `ID` INT NOT NULL ,
+  `Name` VARCHAR(45) NULL ,
+  `Cost` INT(11) NULL ,
+  PRIMARY KEY (`ID`) ,
+  CONSTRAINT `fk_Medicine_DeletedMedicine1`
+    FOREIGN KEY (`ID` )
+    REFERENCES `DeletedMedicine` (`MedicineID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Patients`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `Patients` (
+  `ID` INT NOT NULL ,
+  `Name` VARCHAR(45) NULL ,
+  PRIMARY KEY (`ID`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Bill`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `Bill` (
+  `BillID` INT NOT NULL ,
+  `PatientID` VARCHAR(45) NULL ,
+  `DateCreated` DATETIME NULL ,
+  `DatePaid` DATETIME NULL ,
+  `ConsultationCost` INT(11) NULL ,
+  PRIMARY KEY (`BillID`) ,
+  INDEX `fk_Bill_Patients1_idx` (`PatientID` ASC) ,
+  CONSTRAINT `fk_Bill_Patients1`
+    FOREIGN KEY (`PatientID` )
+    REFERENCES `Patients` (`ID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DeletedPatients`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `DeletedPatients` (
+  `PatientID` INT NOT NULL ,
+  `RemovalDate` DATETIME NULL ,
+  INDEX `fk_DeletedPatients_Patients1_idx` (`PatientID` ASC) ,
+  PRIMARY KEY (`PatientID`) ,
+  CONSTRAINT `fk_DeletedPatients_Patients1`
+    FOREIGN KEY (`PatientID` )
+    REFERENCES `Patients` (`ID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `BillItem`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `BillItem` (
+  `BillIID` INT NOT NULL ,
+  `MedicineID` INT NOT NULL ,
+  `Quantity` INT NULL ,
+  INDEX `fk_BillItem_Bill_idx` (`BillIID` ASC) ,
+  INDEX `fk_BillItem_Medicine1_idx` (`MedicineID` ASC) ,
+  PRIMARY KEY (`MedicineID`, `BillIID`) ,
+  CONSTRAINT `fk_BillItem_Bill`
+    FOREIGN KEY (`BillIID` )
+    REFERENCES `Bill` (`BillID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_BillItem_Medicine1`
+    FOREIGN KEY (`MedicineID` )
+    REFERENCES `Medicine` (`ID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
