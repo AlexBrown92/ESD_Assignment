@@ -48,7 +48,9 @@ public class DBA {
         
         try {
             Class.forName(MYSQL_DRIVER);
-            connection = DriverManager.getConnection(MYSQL_URL + database, databaseUser, databasePassword);
+            String connectionString = String.format("%s?user=%s&password=%s",MYSQL_URL + database, databaseUser, databasePassword);
+            //String connectionString = String.format("%s?user=%s&password=%s",MYSQL_URL + database, "root", "");
+            connection = DriverManager.getConnection(connectionString);
 
             statement = connection.createStatement();
 

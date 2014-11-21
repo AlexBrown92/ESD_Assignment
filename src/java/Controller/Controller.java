@@ -24,21 +24,24 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-       //Finds which page made the request 
-       String url = request.getRequestURI().substring(request.getContextPath().length());
-        
-       //Chooses which business object is responsible for the interaction
-       switch(url){
-           case "/Login":
-               request = Business.User.Login(request);
-               break;
-           case "/Logout":
-               request = Business.User.Logout(request);
-               break;
-       }
-       
+        //Finds which page made the request 
+        String url = request.getRequestURI().substring(request.getContextPath().length()).toLowerCase();
+        String mainPage = "/index.jsp";
+        //Chooses which business object is responsible for the interaction
+        switch (url) {
+            case "/login":
+                request = Business.User.Login(request);
+                break;
+            case "/logout":
+                request = Business.User.Logout(request);
+                break;
+            default:
+                request.setAttribute("view", "");
+        }
 
-       request.getRequestDispatcher("index.jsp").forward(request, response);
+        //request.getRequestDispatcher("index.jsp").forward(request, response);
+        //request.getRequestDispatcher("index.html").forward(request, response);
+        request.getRequestDispatcher(mainPage).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
