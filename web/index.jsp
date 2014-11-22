@@ -31,7 +31,6 @@
                         if (user != null) {
                             sidebar = "/WEB-INF/jspf/navbar.jspf";
                         } else {
-                            //navbar = "jspf/login.jspf";
                             sidebar = "/WEB-INF/jspf/loginbar.jspf";
                         }
                     %> 
