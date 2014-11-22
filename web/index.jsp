@@ -48,7 +48,6 @@
                         } else {
                             view = "homepage.jsp";
                         }
-
                         view = "/WEB-INF/jspf/" + view;
                     %>  
                     <jsp:include page="<%=view%>"></jsp:include>
