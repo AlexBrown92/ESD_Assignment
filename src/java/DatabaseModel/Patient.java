@@ -52,6 +52,8 @@ public class Patient {
                 Patient newPatient = new Patient();
                 newPatient.setID(rs.getInt("id"));
                 newPatient.setName(rs.getString("name"));
+                
+                allPatients.add(newPatient);
             }
             
         } catch (SQLException sqlEx){
