@@ -23,11 +23,12 @@
                     <td><c:out value="${patient.name}"/></td>
                     <td>
                         <form action="patientview" method="post">
-                            <input type="submit" value="View Details" name="${patient.ID}" class="btn btn-sm btn-primary"/>
+                            <input type="submit" value="View Details" class="btn btn-sm btn-primary"/>
+                            <input type="hidden" value="${patient.ID}" name="patient"/>
                         </form>
                     </td>
                     <td><form action="patientremove" method="post">
-                            <input type="submit" value="Remove" name="${patient.ID}" class="btn btn-sm btn-danger"/>
+                            <input type="submit" value="Remove" name="patient${patient.ID}" class="btn btn-sm btn-danger"/>
                         </form>
                     </td>
                 </tr>

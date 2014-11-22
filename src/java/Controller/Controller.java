@@ -39,7 +39,7 @@ public class Controller extends HttpServlet {
                 request = Business.Patient.ListPatients(request);
                 break;
             case "/patientview":
-                request.setAttribute("view", "patientview");
+                request = Business.Patient.ListPatientBill(request);
                 break;
             default:
                 request.setAttribute("view", "");

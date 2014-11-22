@@ -24,5 +24,18 @@ public class Patient {
           
           return request;
       }
+      
+       public static HttpServletRequest ListPatientBill(HttpServletRequest request) {
+          DatabaseModel.Patient patient = new DatabaseModel.Patient();
+          
+          int patientID = Integer.parseInt(request.getParameter("patient"));
+          
+          ArrayList<DatabaseModel.Patient> patients = patient.listAllPatients();
+          
+          request.setAttribute("patients", patients);
+          request.setAttribute("view", "patientview");
+          
+          return request;
+      }
     
 }
