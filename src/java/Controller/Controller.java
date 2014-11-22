@@ -35,8 +35,11 @@ public class Controller extends HttpServlet {
             case "/logout":
                 request = Business.User.Logout(request);
                 break;
-            case "/listpatients":
+            case "/patientslist":
                 request = Business.Patient.ListPatients(request);
+                break;
+            case "/patientview":
+                request.setAttribute("view", "patientview");
                 break;
             default:
                 request.setAttribute("view", "");

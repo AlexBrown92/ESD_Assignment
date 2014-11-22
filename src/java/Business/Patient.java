@@ -20,7 +20,7 @@ public class Patient {
           ArrayList<DatabaseModel.Patient> patients = patient.listAllPatients();
           
           request.setAttribute("patients", patients);
-          request.setAttribute("view", "listpatients");
+          request.setAttribute("view", "patientslist");
           
           return request;
       }

@@ -1,5 +1,5 @@
 <li>
-    <a href="listpatients">List all Patients</a>
+    <a href="patientslist">List all Patients</a>
 </li>
 <li>
     <a href="#">List all Medicines</a>
