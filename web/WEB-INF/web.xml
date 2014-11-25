@@ -33,6 +33,10 @@
     </session-config>
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/jspf/error.jspf</location>
+        <location>/WEB-INF/jspf/error404.jspf</location>
+    </error-page>
+    <error-page>
+        <exception-type>generic error</exception-type>
+        <location>/WEB-INF/jspf/errorgeneric.jspf</location>
     </error-page>
 </web-app>
