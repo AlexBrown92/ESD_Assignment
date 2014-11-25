@@ -25,6 +25,8 @@
         <url-pattern>/jspf/*</url-pattern>
         <url-pattern>/login</url-pattern>
         <url-pattern>/logout</url-pattern>
+        <url-pattern>/patientslist</url-pattern>
+        <url-pattern>/patientview</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

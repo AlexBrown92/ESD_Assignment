@@ -50,8 +50,10 @@ public class Patient {
             
             while(rs.next()){
                 Patient newPatient = new Patient();
-                newPatient.setID(rs.getInt("ID"));
+                newPatient.setID(rs.getInt("id"));
                 newPatient.setName(rs.getString("name"));
+                
+                allPatients.add(newPatient);
             }
             
         } catch (SQLException sqlEx){

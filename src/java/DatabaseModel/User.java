@@ -53,7 +53,7 @@ public class User {
      * @return 
      */
     public User findUser(String username, String password){
-        String query = "SELECT * FROM User WHERE UserName = '%s' AND password = '%s'";
+        String query = "SELECT * FROM user WHERE username = '%s' AND password = '%s'";
         DBA dba  = Helper.getDBA();
         
         try{
@@ -61,9 +61,9 @@ public class User {
             ResultSet rs = dba.executeQuery(String.format(query, username, password));
        
             while(rs.next()){
-                this.ID = rs.getInt("ID");
-                this.userName = rs.getString("UserName");
-                this.password = rs.getString("Password");
+                this.ID = rs.getInt("userId");
+                this.userName = rs.getString("username");
+                this.password = rs.getString("password");
             }
             rs.close();
             dba.closeConnections();

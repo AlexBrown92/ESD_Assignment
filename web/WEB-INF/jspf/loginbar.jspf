@@ -1,17 +1,17 @@
-<form role="form" action="login" method="post"/>
+<form action="login" method="post" role="form"/>
 <li>
-    <div class="form-group"> 
-        <label for="login-username">Username</label>
-        <input type="text" class="form-control" id="login-username" name="username" placeholder="Enter Username"/>
+    <div class="form-group col-sm-12"> 
+        <label for="username">User</label>
+        <input type="text" name="username" id="username" class="form-control"/>
     </div>
 </li>
 <li>
-    <div class="form-group"> 
-        <label>Password</label>
-        <input type="password" class="form-control" id="login-password" name="password" placeholder="Enter Password"/>
+    <div class="form-group col-sm-12"> 
+    <label for="password">Password</label>
+    <input type="text" name="password" id="password" class="form-control"/>
     </div>
 </li>
 <li>
-    <input class="btn btn-default" type="submit" value="login"/>
+    <input type="submit" value="login" class="btn btn-primary"/>
 </li>
 </form> 

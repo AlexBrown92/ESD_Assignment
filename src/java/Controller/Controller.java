@@ -35,12 +35,16 @@ public class Controller extends HttpServlet {
             case "/logout":
                 request = Business.User.Logout(request);
                 break;
+            case "/patientslist":
+                request = Business.Patient.ListPatients(request);
+                break;
+            case "/patientview":
+                request = Business.Patient.ListPatientBill(request);
+                break;
             default:
                 request.setAttribute("view", "");
         }
 
-        //request.getRequestDispatcher("index.jsp").forward(request, response);
-        //request.getRequestDispatcher("index.html").forward(request, response);
         request.getRequestDispatcher(mainPage).forward(request, response);
     }
 
