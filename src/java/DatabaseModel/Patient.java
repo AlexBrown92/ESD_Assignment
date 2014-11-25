@@ -6,6 +6,7 @@
 package DatabaseModel;
 
 import Utils.Helper;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,7 +51,12 @@ public class Patient {
     }
 
     public ArrayList<Patient> listAllPatients() {
-        String query = "SELECT * FROM patients";
+        String query = "SELECT  `patients`.`ID`" 
+                             +",`patients`.`name`" 
+                      + "FROM  	`patients`" 
+                      + "LEFT JOIN `deletedPatient` ON `patients`.`ID` = `deletedPatient`.`patientId` "
+                      + "WHERE `deletedPatient`.`patientId` IS NULL;" ;
+        
         ArrayList<Patient> allPatients = new ArrayList<>();
         Utils.DBA dba = Helper.getDBA();
         ResultSet rs;
@@ -75,12 +81,14 @@ public class Patient {
 
     public void removePatient(int patientID) {
 
-        String query = "DELETE FROM `patients` "
-                + "WHERE `patients`.`id` = '%d';";
+        String query = "insert into `deletedPatient` (`patientId`, `removalDate`) "
+                + "values ('%d', '%s');";
 
         Utils.DBA dba = Helper.getDBA();
 
-        dba.executeUpdate(String.format(query, patientID));
+        java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+        
+        dba.executeUpdate(String.format(query, patientID, date.toString()));
         dba.closeConnections();
 
     }
