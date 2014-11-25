@@ -43,9 +43,8 @@
                     <div class="container-fluid">
                     <%
                         String view = (String) request.getAttribute("view");
-                        if (view != null) {
-                            view = view + ".jsp";
-                        } else {
+                        if (view == null) {
+                            
                             view = "homepage.jsp";
                         }
                         view = "/WEB-INF/jspf/" + view;

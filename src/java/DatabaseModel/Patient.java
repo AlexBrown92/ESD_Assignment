@@ -15,14 +15,16 @@ import java.util.ArrayList;
  * @author david
  */
 public class Patient {
+
     private int ID;
     private String name;
-    
-    public Patient(){
+    private boolean canRemove;
+
+    public Patient() {
         ID = 0;
-        name = ""; 
+        name = "";
     }
-    
+
     public int getID() {
         return ID;
     }
@@ -38,29 +40,36 @@ public class Patient {
     public void setName(String name) {
         this.name = name;
     }
-    
-   
-    public ArrayList<Patient> listAllPatients(){
+
+    public void setCanRemove(boolean canRemove) {
+        this.canRemove = canRemove;
+    }
+
+    public boolean canRemove() {
+        return canRemove;
+    }
+
+    public ArrayList<Patient> listAllPatients() {
         String query = "SELECT * FROM patients";
-        ArrayList<Patient>  allPatients = new ArrayList<>(); 
+        ArrayList<Patient> allPatients = new ArrayList<>();
         Utils.DBA dba = Helper.getDBA();
         ResultSet rs;
-        try{
+        try {
             rs = Helper.getDBA().executeQuery(query);
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Patient newPatient = new Patient();
                 newPatient.setID(rs.getInt("id"));
                 newPatient.setName(rs.getString("name"));
-                
+
                 allPatients.add(newPatient);
             }
-            
-        } catch (SQLException sqlEx){
+
+        } catch (SQLException sqlEx) {
             Helper.logException(sqlEx);
-            
+
         }
-         
+
         return allPatients;
     }
 }

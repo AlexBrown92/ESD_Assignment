@@ -25,10 +25,10 @@ public class User {
         
         if (user.getID() > 0) {
             request.getSession().setAttribute("user", user);
-            request.setAttribute("view", "homepage");
+            request.setAttribute("view", "homepage.jsp");
         } else {
             request.getSession().invalidate();
-            request.setAttribute("view", "error");
+            request.setAttribute("view", "errorgeneric.jspf");
         }
 
         return request;
