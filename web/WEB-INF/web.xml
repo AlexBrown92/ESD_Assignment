@@ -27,6 +27,7 @@
         <url-pattern>/logout</url-pattern>
         <url-pattern>/patientslist</url-pattern>
         <url-pattern>/patientview</url-pattern>
+         <url-pattern>/patientremove</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

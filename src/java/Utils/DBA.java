@@ -73,6 +73,38 @@ public class DBA {
         return rs;
     }
 
+     public int executeUpdate(String sql) {
+        int result = -1;
+        closeConnections(); 
+        
+        try {
+            Class.forName(MYSQL_DRIVER);
+            String connectionString = String.format("%s?user=%s&password=%s",MYSQL_URL + database, databaseUser, databasePassword);
+            //String connectionString = String.format("%s?user=%s&password=%s",MYSQL_URL + database, "root", "");
+            connection = DriverManager.getConnection(connectionString);
+
+            statement = connection.createStatement();
+
+            result = statement.executeUpdate(sql);
+
+        } catch (SQLException sqlEx) {
+            Helper.logException(sqlEx);
+
+            try {
+                connection.close();
+            } catch (SQLException sqlEx2) {
+                Helper.logException(sqlEx2);
+            }
+        } catch (ClassNotFoundException cnfEx) {
+            Helper.logException(cnfEx);
+        } finally {
+
+        }
+
+        return result;
+    }
+
+    
     /***
      * Will try to terminate connections to the database if possible 
      */

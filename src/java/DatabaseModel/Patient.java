@@ -72,4 +72,17 @@ public class Patient {
 
         return allPatients;
     }
+
+    public void removePatient(int patientID) {
+
+        String query = "DELETE FROM `patients` "
+                + "WHERE `patients`.`id` = '%d';";
+
+        Utils.DBA dba = Helper.getDBA();
+
+        dba.executeUpdate(String.format(query, patientID));
+        dba.closeConnections();
+
+    }
+
 }

@@ -41,6 +41,13 @@ public class Controller extends HttpServlet {
             case "/patientview":
                 request = Business.Patient.ListPatientBill(request);
                 break;
+            case "/patientremove":
+                request = Business.Patient.RemovePatient(request);
+                break;
+            case "/billPay":
+                break;
+            case "/billView":
+                break; 
             default:
                 response.setStatus(401);
                 request.setAttribute("view", "");

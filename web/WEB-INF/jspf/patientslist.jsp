@@ -33,6 +33,7 @@
                                 disabled
                             </c:if>
                             " />
+                            <input type="hidden" value="${patient.ID}" name="patient" />
                         </form>
                     </td>
                 </tr>

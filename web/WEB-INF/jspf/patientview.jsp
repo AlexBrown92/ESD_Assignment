@@ -34,14 +34,16 @@
                         <fmt:formatDate pattern="dd/MM/yyyy" value="${billDate}" />
                     </td>
                     <td>
-                        <form action="" method="post">
+                        <form action="billView" method="post">
                             <input type="submit" value="View Details" class="btn btn-sm btn-primary"/>
+                            <input type="hidden" value="${bill.id}" name="billID"/>
                         </form>
                     </td>
                     <td>
-                        <form action="" method="post">
+                        <form action="billPay" method="post">
                             <c:if test="${bill.datePaid == null}">
                                 <input type="submit" value="Pay" class="btn btn-sm btn-success"/>
+                                <input type="hidden" value="${bill.id}" name="billID" />
                             </c:if>
                         </form>
                     </td>
