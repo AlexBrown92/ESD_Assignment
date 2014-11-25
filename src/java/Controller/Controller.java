@@ -42,6 +42,7 @@ public class Controller extends HttpServlet {
                 request = Business.Patient.ListPatientBill(request);
                 break;
             default:
+                response.setStatus(401);
                 request.setAttribute("view", "");
         }
 

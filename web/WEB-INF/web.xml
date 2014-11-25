@@ -39,4 +39,8 @@
         <exception-type>generic error</exception-type>
         <location>/WEB-INF/jspf/errorgeneric.jspf</location>
     </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/jspf/error404.jspf</location>
+    </error-page>
 </web-app>

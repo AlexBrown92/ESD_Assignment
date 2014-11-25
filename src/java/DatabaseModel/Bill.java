@@ -25,6 +25,14 @@ public class Bill {
         this.consultationCost = 0;
     }
 
+    public Bill(int id, int patientId, Timestamp dateCreated, Timestamp datePaid, int consultationCost) {
+        this.id = id;
+        this.patientId = patientId;
+        this.dateCreated = dateCreated;
+        this.datePaid = datePaid;
+        this.consultationCost = consultationCost;
+    }
+
     public int getId() {
         return id;
     }
@@ -65,14 +73,66 @@ public class Bill {
         this.consultationCost = consultationCost;
     }
 
+    public ArrayList<Bill> findUserPaidBill(int patientId) {
+        return findUserBill(patientId, false);
+    }
+
+    public ArrayList<Bill> findUserOutstandingBill(int patientId) {
+        return findUserBill(patientId, true);
+    }
+
+    private ArrayList<Bill> findUserBill(int patientId, boolean outStanding) {
+        String query = "SELECT `bill`.`billId`, "
+                + "     `bill`.`patientId`, "
+                + "     `bill`.`dateCreated`, "
+                + "     `bill`.`datePaid`, "
+                + "     `bill`.`consulationCost` "
+                + " FROM `bill` "
+                + " WHERE `bill`.`patientId` = '%d'";
+        if (outStanding) {
+            query += " AND `bill`.`datePaid` IS NULL;";
+        } else {
+            query += " AND `bill`.`datePaid` IS NOT NULL;";
+        }
+        DBA dba = Helper.getDBA();
+
+        ArrayList<Bill> listOfBills = new ArrayList<>();
+        try {
+            ResultSet rs = dba.executeQuery(String.format(query, patientId));
+
+            if (rs != null) {
+
+                while (rs.next()) {
+                    Bill newBill = new Bill();
+
+                    newBill.setId(rs.getInt("billId"));
+                    newBill.setPatientId(rs.getInt("patientId"));
+                    newBill.setDateCreated(rs.getTimestamp("dateCreated"));
+                    newBill.setDatePaid(rs.getTimestamp("datePaid"));
+                    newBill.setConsultationCost(rs.getInt("consultationCost"));
+
+                    listOfBills.add(newBill);
+                }
+
+                rs.close();
+            }
+            dba.closeConnections();
+
+        } catch (SQLException sqlEx) {
+            dba.closeConnections();
+            Helper.logException(sqlEx);
+        }
+        return listOfBills;
+    }
+
     public Bill findBill(int billId) {
         String query = "SELECT `bill`.`billId`, "
-                    + "     `bill`.`patientId`, "
-                    + "     `bill`.`dateCreated`, "
-                    + "     `bill`.`datePaid`, "
-                    + "     `bill`.`consulationCost` "
-                    + " FROM `bill` "
-                    + " WHERE `bill`.`billId` = '%d'";
+                + "     `bill`.`patientId`, "
+                + "     `bill`.`dateCreated`, "
+                + "     `bill`.`datePaid`, "
+                + "     `bill`.`consulationCost` "
+                + " FROM `bill` "
+                + " WHERE `bill`.`billId` = '%d'";
         DBA dba = Helper.getDBA();
         try {
             ResultSet rs = dba.executeQuery(String.format(query, billId));
