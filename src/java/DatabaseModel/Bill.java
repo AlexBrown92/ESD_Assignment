@@ -16,6 +16,7 @@ public class Bill {
     Timestamp dateCreated;
     Timestamp datePaid;
     int consultationCost;
+    int cost;
 
     public Bill() {
         this.id = 0;
@@ -73,6 +74,14 @@ public class Bill {
         this.consultationCost = consultationCost;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
     public ArrayList<Bill> findUserPaidBill(int patientId) {
         return findUserBill(patientId, false);
     }
@@ -81,12 +90,85 @@ public class Bill {
         return findUserBill(patientId, true);
     }
 
+    public int getBillCost(int billId) {
+        int total = 0;
+
+        String query = "SELECT sum(`cost` * `quantity`) + `consultationCost` as `total` "
+                + "FROM `billItem` "
+                + "INNER JOIN `bill` on `bill`.`billId` = `billItem`.`billId` "
+                + "AND `bill`.`billId` = '%d' "
+                + "INNER JOIN `medicine` on `billItem`.`medicineid` = `medicine`.`id` "
+                + "group by `bill`.`billid`;";
+
+        DBA dba = Helper.getDBA();
+
+        try {
+            ResultSet rs = dba.executeQuery(String.format(query, billId));
+
+            if (rs != null) {
+
+                while (rs.next()) {
+                    total = rs.getInt("total");
+                }
+                
+                rs.close();
+
+            }
+            dba.closeConnections();
+        } catch (SQLException sqlEx) {
+            dba.closeConnections();
+            Helper.logException(sqlEx);
+        }
+
+        return total;
+    }
+
+    public ArrayList<Bill> findUserAllBill(int patientId) {
+        String query = "SELECT `bill`.`billId`, "
+                + "     `bill`.`patientId`, "
+                + "     `bill`.`dateCreated`, "
+                + "     `bill`.`datePaid`, "
+                + "     `bill`.`consultationCost` "
+                + " FROM `bill` "
+                + " WHERE `bill`.`patientId` = '%d' ;";
+
+        DBA dba = Helper.getDBA();
+
+        ArrayList<Bill> listOfBills = new ArrayList<>();
+        try {
+            ResultSet rs = dba.executeQuery(String.format(query, patientId));
+
+            if (rs != null) {
+
+                while (rs.next()) {
+                    Bill newBill = new Bill();
+
+                    newBill.setId(rs.getInt("billId"));
+                    newBill.setPatientId(rs.getInt("patientId"));
+                    newBill.setDateCreated(rs.getTimestamp("dateCreated"));
+                    newBill.setDatePaid(rs.getTimestamp("datePaid"));
+                    newBill.setConsultationCost(rs.getInt("consultationCost"));
+
+                    listOfBills.add(newBill);
+                }
+
+                rs.close();
+            }
+            dba.closeConnections();
+
+        } catch (SQLException sqlEx) {
+            dba.closeConnections();
+            Helper.logException(sqlEx);
+        }
+        return listOfBills;
+    }
+
     private ArrayList<Bill> findUserBill(int patientId, boolean outStanding) {
         String query = "SELECT `bill`.`billId`, "
                 + "     `bill`.`patientId`, "
                 + "     `bill`.`dateCreated`, "
                 + "     `bill`.`datePaid`, "
-                + "     `bill`.`consulationCost` "
+                + "     `bill`.`consultationCost` "
                 + " FROM `bill` "
                 + " WHERE `bill`.`patientId` = '%d'";
         if (outStanding) {
@@ -130,7 +212,7 @@ public class Bill {
                 + "     `bill`.`patientId`, "
                 + "     `bill`.`dateCreated`, "
                 + "     `bill`.`datePaid`, "
-                + "     `bill`.`consulationCost` "
+                + "     `bill`.`consultationCost` "
                 + " FROM `bill` "
                 + " WHERE `bill`.`billId` = '%d'";
         DBA dba = Helper.getDBA();

@@ -13,56 +13,63 @@ import javax.servlet.http.HttpServletRequest;
  * @author david
  */
 public class Patient {
-
+    
     public static HttpServletRequest ListPatients(HttpServletRequest request) {
         DatabaseModel.Patient patient = new DatabaseModel.Patient();
-
+        
         ArrayList<DatabaseModel.Patient> patients = patient.listAllPatients();
-
+        
         for (DatabaseModel.Patient thisPatient : patients) {
-            thisPatient.setCanRemove(setCanRemove(patient.getID()));
+            thisPatient.setRemovable(setCanRemove(thisPatient.getID()));
         }
-
+        
         request.setAttribute("patients", patients);
         request.setAttribute("view", "patientslist.jsp");
-
+        
         return request;
     }
-
+    
     public static HttpServletRequest ListPatientBill(HttpServletRequest request) {
         DatabaseModel.Patient patient = new DatabaseModel.Patient();
-
+        
         int patientID = Integer.parseInt(request.getParameter("patient"));
-
+        
         ArrayList<DatabaseModel.Patient> patients = patient.listAllPatients();
         
-        
         DatabaseModel.Bill bill = new DatabaseModel.Bill();
-
-                
-        ArrayList<DatabaseModel.Bill> patientPaidBills = bill.findUserPaidBill(patientID);
-        ArrayList<DatabaseModel.Bill> patientOutstandingBills = bill.findUserOutstandingBill(patientID);
-    
-
-        request.setAttribute("patients", patients);
+        
+        ArrayList<DatabaseModel.Bill> bills = bill.findUserAllBill(patientID);
+        
+        for (DatabaseModel.Bill thisBill : bills) {
+            thisBill.setCost(setBillCost(thisBill.getId()));
+        }
+        
+        request.setAttribute("patient", patients.get(0));
+        request.setAttribute("bills", bills);
         request.setAttribute("view", "patientview.jsp");
-
+        
         return request;
     }
-
+    
     private static boolean setCanRemove(int patientID) {
         boolean canRemove = false;
-
+        
         DatabaseModel.Bill bill = new DatabaseModel.Bill();
         ArrayList<DatabaseModel.Bill> patientOutstandingBills = bill.findUserOutstandingBill(patientID);
-
+        
         if (!patientOutstandingBills.isEmpty()) {
             canRemove = false;
         } else {
             canRemove = true;
         }
-
+        
         return canRemove;
     }
-
+    
+    private static int setBillCost(int billID) {
+        DatabaseModel.Bill bill = new DatabaseModel.Bill();
+        
+        return bill.getBillCost(billID);
+    }
+    
 }

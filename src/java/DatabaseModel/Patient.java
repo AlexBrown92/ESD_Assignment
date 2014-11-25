@@ -18,7 +18,7 @@ public class Patient {
 
     private int ID;
     private String name;
-    private boolean canRemove;
+    private boolean removable;
 
     public Patient() {
         ID = 0;
@@ -41,12 +41,12 @@ public class Patient {
         this.name = name;
     }
 
-    public void setCanRemove(boolean canRemove) {
-        this.canRemove = canRemove;
+    public void setRemovable(boolean removable) {
+        this.removable = removable;
     }
 
-    public boolean canRemove() {
-        return canRemove;
+    public boolean isRemovable() {
+        return removable;
     }
 
     public ArrayList<Patient> listAllPatients() {
