@@ -56,7 +56,7 @@ public class Medicine {
      * @param cost
      * @return
      */
-    public ArrayList<Medicine> listMedicines() {
+    public static ArrayList<Medicine> listMedicines() {
         String query = "SELECT * FROM medicine";
         DBA dba = Helper.getDBA();
 

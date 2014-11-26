@@ -50,18 +50,45 @@ public class Patient {
         return removable;
     }
 
+    public Patient findPatient(int patientId) {
+
+        String query = "SELECT  `patients`.`ID`"
+                +               ",`patients`.`name`"
+                + "FROM  	`patients`"
+                + "WHERE `patients`.`ID` = '%d';";
+
+        Utils.DBA dba = Helper.getDBA();
+        ResultSet rs;
+        try {
+            rs = dba.executeQuery(String.format(query, patientId));
+
+            while (rs.next()) {
+                this.ID =(rs.getInt("id"));
+                this.name = (rs.getString("name"));
+
+            }
+            rs.close();
+            dba.closeConnections();
+        } catch (SQLException sqlEx) {
+            Helper.logException(sqlEx);
+            dba.closeConnections();
+        }
+
+        return this;
+    }
+
     public ArrayList<Patient> listAllPatients() {
-        String query = "SELECT  `patients`.`ID`" 
-                             +",`patients`.`name`" 
-                      + "FROM  	`patients`" 
-                      + "LEFT JOIN `deletedPatient` ON `patients`.`ID` = `deletedPatient`.`patientId` "
-                      + "WHERE `deletedPatient`.`patientId` IS NULL;" ;
-        
+        String query = "SELECT  `patients`.`ID`"
+                + ",`patients`.`name`"
+                + "FROM  	`patients`"
+                + "LEFT JOIN `deletedPatient` ON `patients`.`ID` = `deletedPatient`.`patientId` "
+                + "WHERE `deletedPatient`.`patientId` IS NULL;";
+
         ArrayList<Patient> allPatients = new ArrayList<>();
         Utils.DBA dba = Helper.getDBA();
         ResultSet rs;
         try {
-            rs = Helper.getDBA().executeQuery(query);
+            rs = dba.executeQuery(query);
 
             while (rs.next()) {
                 Patient newPatient = new Patient();
@@ -70,10 +97,11 @@ public class Patient {
 
                 allPatients.add(newPatient);
             }
-
+            rs.close();
+            dba.closeConnections();
         } catch (SQLException sqlEx) {
             Helper.logException(sqlEx);
-
+            dba.closeConnections();
         }
 
         return allPatients;
@@ -87,7 +115,7 @@ public class Patient {
         Utils.DBA dba = Helper.getDBA();
 
         java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
-        
+
         dba.executeUpdate(String.format(query, patientID, date.toString()));
         dba.closeConnections();
 

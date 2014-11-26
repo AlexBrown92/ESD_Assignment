@@ -16,7 +16,7 @@ public class Bill {
     Timestamp dateCreated;
     Timestamp datePaid;
     int consultationCost;
-    int cost;
+    int totalCost;
 
     public Bill() {
         this.id = 0;
@@ -74,12 +74,12 @@ public class Bill {
         this.consultationCost = consultationCost;
     }
 
-    public int getCost() {
-        return cost;
+    public int getTotalCost() {
+        return totalCost;
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
+    public void setTotalCost(int totalCost) {
+        this.totalCost = totalCost;
     }
 
     public ArrayList<Bill> findUserPaidBill(int patientId) {
@@ -93,11 +93,11 @@ public class Bill {
     public int getBillCost(int billId) {
         int total = 0;
 
-        String query = "SELECT sum(`cost` * `quantity`) + `consultationCost` as `total` "
-                + "FROM `billItem` "
-                + "INNER JOIN `bill` on `bill`.`billId` = `billItem`.`billId` "
-                + "AND `bill`.`billId` = '%d' "
-                + "INNER JOIN `medicine` on `billItem`.`medicineid` = `medicine`.`id` "
+        String query = "SELECT ifNull(sum(`cost` * `quantity`),0) + `consultationCost` as `total` "
+                + "FROM  `bill`"
+                + "LEFT JOIN `billItem` on `bill`.`billId` = `billItem`.`billId` "
+                + "LEFT JOIN `medicine` on `billItem`.`medicineid` = `medicine`.`id` "
+                + "WHERE `bill`.`billId` = '%d' "
                 + "group by `bill`.`billid`;";
 
         DBA dba = Helper.getDBA();
@@ -110,7 +110,7 @@ public class Bill {
                 while (rs.next()) {
                     total = rs.getInt("total");
                 }
-                
+
                 rs.close();
 
             }
@@ -235,5 +235,7 @@ public class Bill {
         }
         return this;
     }
+
+    
 
 }

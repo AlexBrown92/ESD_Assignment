@@ -9,6 +9,7 @@ import Utils.DBA;
 import Utils.Helper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -76,4 +77,36 @@ public class BillItem {
         return this;
     }
 
+    public static ArrayList<BillItem> listBillItems(int billID) {
+
+        String query = "SELECT *"
+                + "FROM `billItem`"
+                + "WHERE `billItem`.`billId` = '%d';";
+
+        ArrayList<BillItem> listOfBillItems = new ArrayList<>();
+        DBA dba = Helper.getDBA();
+        try {
+            ResultSet rs = dba.executeQuery(String.format(query, billID));
+
+            if (rs != null) {
+
+                while (rs.next()) {
+                    BillItem newBillItem = new BillItem();
+
+                    newBillItem.setBillId(rs.getInt("billId"));
+                    newBillItem.setMedicineId(rs.getInt("medicineId"));
+                    newBillItem.setQuanitity(rs.getInt("quantity"));
+                
+                    listOfBillItems.add(newBillItem);
+                }
+                rs.close();
+                dba.closeConnections();
+            }
+        } catch (SQLException sqlEx) {
+            dba.closeConnections();
+            Helper.logException(sqlEx);
+        }
+
+        return listOfBillItems;
+    }
 }

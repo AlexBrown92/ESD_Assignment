@@ -44,9 +44,10 @@ public class Controller extends HttpServlet {
             case "/patientremove":
                 request = Business.Patient.RemovePatient(request);
                 break;
-            case "/billPay":
+            case "/billpay":
                 break;
-            case "/billView":
+            case "/billview":
+                request = Business.Bill.viewBill(request);
                 break; 
             default:
                 response.setStatus(401);
