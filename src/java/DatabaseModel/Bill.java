@@ -235,5 +235,20 @@ public class Bill {
         }
         return this;
     }
+    
+    public int addBill(int patientID, int consultationCost){
+
+        String query = "INSERT INTO `bill` (`patientId`, `dateCreated`, `datePaid`, `consultationCost`) "
+                + "values ('%d', '%s', NULL,'%d');";
+
+        Utils.DBA dba = Helper.getDBA();
+
+        java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+        
+        int billID = dba.executeUpdate(String.format(query, patientID, date.toString()));
+        dba.closeConnections();
+
+        return billID;
+    }
 
 }
