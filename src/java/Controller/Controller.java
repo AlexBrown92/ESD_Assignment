@@ -30,10 +30,10 @@ public class Controller extends HttpServlet {
         //Chooses which business object is responsible for the interaction
         switch (url) {
             case "/login":
-                request = Business.User.Login(request);
+                request = Business.User.login(request);
                 break;
             case "/logout":
-                request = Business.User.Logout(request);
+                request = Business.User.logout(request);
                 break;
             case "/patientslist":
                 request = Business.Patient.listPatients(request);
@@ -42,13 +42,14 @@ public class Controller extends HttpServlet {
                 request = Business.Patient.listPatientBill(request);
                 break;
             case "/patientremove":
-                request = Business.Patient.RemovePatient(request);
+                request = Business.Patient.removePatient(request);
                 break;
             case "/billpay":
+                request = Business.Bill.payBill(request);
                 break;
             case "/billview":
                 request = Business.Bill.viewBill(request);
-                break; 
+                break;
             default:
                 response.setStatus(401);
                 request.setAttribute("view", "");

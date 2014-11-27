@@ -51,7 +51,7 @@ public class Patient {
         return request;
     }
 
-    public static HttpServletRequest RemovePatient(HttpServletRequest request) {
+    public static HttpServletRequest removePatient(HttpServletRequest request) {
         int patientID = Integer.parseInt(request.getParameter("patient"));
 
         if (canRemove(patientID)) {

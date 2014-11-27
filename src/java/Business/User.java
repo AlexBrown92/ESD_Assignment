@@ -13,7 +13,7 @@ public class User {
      * @param request
      * @return request with a set session and the attribute "include" set to the correct page
      */
-    public static HttpServletRequest Login(HttpServletRequest request) {
+    public static HttpServletRequest login(HttpServletRequest request) {
         Models.DatabaseModel.User user  = new Models.DatabaseModel.User();
         
         String username = request.getParameter("username");
@@ -72,7 +72,7 @@ public class User {
      * @param request
      * @return 
      */
-    public static HttpServletRequest Logout(HttpServletRequest request) {
+    public static HttpServletRequest logout(HttpServletRequest request) {
 
         request.getSession().invalidate();
         request.setAttribute("include", "login.jsp");
