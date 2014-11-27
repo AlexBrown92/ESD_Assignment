@@ -85,7 +85,16 @@ public class DBA {
 
             statement = connection.createStatement();
 
-            result = statement.executeUpdate(sql);
+            int affectedRows = statement.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
+            
+            if (affectedRows != 0){
+                ResultSet genKeys = statement.getGeneratedKeys();
+                if (genKeys.next()){
+                    result = genKeys.getInt(1);
+                } 
+            } else {
+                throw new SQLException("Error with Update/Insert.");
+            }
 
         } catch (SQLException sqlEx) {
             Helper.logException(sqlEx);
