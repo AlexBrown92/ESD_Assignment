@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DatabaseModel;
+package Models.DatabaseModel;
 
 import Utils.DBA;
 import Utils.Helper;

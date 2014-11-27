@@ -1,6 +1,6 @@
-package ViewModel;
+package Models.ViewModel;
 
-import DatabaseModel.Medicine;
+import Models.DatabaseModel.Medicine;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,8 +20,8 @@ public class BillView {
     private Date datePaid;
     private int consultationCost;
     private int totalCost;
-    private ArrayList<ViewModel.BillItem> billItems;
-    private ArrayList<DatabaseModel.Medicine> medicines; 
+    private ArrayList<Models.ViewModel.BillItem> billItems;
+    private ArrayList<Models.DatabaseModel.Medicine> medicines; 
     
     public int getBillID() {
         return billID;
@@ -87,11 +87,11 @@ public class BillView {
         this.totalCost = totalCost;
     }
 
-    public ArrayList<ViewModel.BillItem> getBillItems() {
+    public ArrayList<Models.ViewModel.BillItem> getBillItems() {
         return billItems;
     }
 
-    public void setBillItems(ArrayList<ViewModel.BillItem> billItems) {
+    public void setBillItems(ArrayList<Models.ViewModel.BillItem> billItems) {
         this.billItems = billItems;
     }
 

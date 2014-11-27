@@ -14,7 +14,7 @@ public class User {
      * @return request with a set session and the attribute "include" set to the correct page
      */
     public static HttpServletRequest Login(HttpServletRequest request) {
-        DatabaseModel.User user  = new DatabaseModel.User();
+        Models.DatabaseModel.User user  = new Models.DatabaseModel.User();
         
         String username = request.getParameter("username");
         String password = request.getParameter("password");

@@ -1,4 +1,4 @@
-package DatabaseModel;
+package Models.DatabaseModel;
 
 import Utils.DBA;
 import Utils.Helper;

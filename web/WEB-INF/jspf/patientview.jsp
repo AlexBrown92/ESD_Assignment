@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-    DatabaseModel.Patient patient = (DatabaseModel.Patient) request.getAttribute("patient");
+    Models.DatabaseModel.Patient patient = (Models.DatabaseModel.Patient) request.getAttribute("patient");
     pageContext.setAttribute("patient", patient);
 %>
 
@@ -23,7 +23,7 @@
             </thead>
             <tbody>
                 <%
-                    ArrayList<DatabaseModel.Bill> bills = (ArrayList<DatabaseModel.Bill>) request.getAttribute("bills");
+                    ArrayList<Models.DatabaseModel.Bill> bills = (ArrayList<Models.DatabaseModel.Bill>) request.getAttribute("bills");
                     pageContext.setAttribute("bills", bills);
                 %>
                 <c:forEach items="${bills}" var="bill">

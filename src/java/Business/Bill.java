@@ -21,15 +21,15 @@ public class Bill {
 
         int billID = Integer.parseInt(request.getParameter("billID"));
 
-        DatabaseModel.Bill bill = new DatabaseModel.Bill();
+        Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
 
         bill = bill.findBill(billID);
         bill.setTotalCost(bill.getTotalCost(billID));
 
-        DatabaseModel.Patient patient = new DatabaseModel.Patient();
+        Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
         patient = patient.findPatient(bill.getPatientId());
         
-        ViewModel.BillView billView = new ViewModel.BillView();
+        Models.ViewModel.BillView billView = new Models.ViewModel.BillView();
 
         billView.setBillID(billID);
         billView.setConsultationCost(bill.getConsultationCost());
@@ -46,8 +46,8 @@ public class Bill {
         billView.setPatientName(patient.getName());
         billView.setTotalCost(bill.getTotalCost(billID));
         
-        ArrayList<DatabaseModel.BillItem> billItems = DatabaseModel.BillItem.listBillItems(bill.getId());
-        ArrayList<DatabaseModel.Medicine> medicines = DatabaseModel.Medicine.listMedicines();
+        ArrayList<Models.DatabaseModel.BillItem> billItems = Models.DatabaseModel.BillItem.listBillItems(bill.getId());
+        ArrayList<Models.DatabaseModel.Medicine> medicines = Models.DatabaseModel.Medicine.listMedicines();
         billView.setMedicines(medicines);
         billView.setBillItems(getBillItems(billItems, medicines));
         
@@ -57,13 +57,13 @@ public class Bill {
         return request;
     }
     
-    private static ArrayList<ViewModel.BillItem> getBillItems(ArrayList<DatabaseModel.BillItem> billItems, ArrayList<DatabaseModel.Medicine> medicines){
+    private static ArrayList<Models.ViewModel.BillItem> getBillItems(ArrayList<Models.DatabaseModel.BillItem> billItems, ArrayList<Models.DatabaseModel.Medicine> medicines){
         
-        ArrayList<ViewModel.BillItem> viewmodelbillItemArray = new ArrayList<>();
-        for(DatabaseModel.BillItem billItem : billItems){
-            for(DatabaseModel.Medicine medicine : medicines){
+        ArrayList<Models.ViewModel.BillItem> viewmodelbillItemArray = new ArrayList<>();
+        for(Models.DatabaseModel.BillItem billItem : billItems){
+            for(Models.DatabaseModel.Medicine medicine : medicines){
                 if(billItem.getMedicineId() == medicine.getID()){
-                    viewmodelbillItemArray.add(new ViewModel.BillItem(billItem,medicine));
+                    viewmodelbillItemArray.add(new Models.ViewModel.BillItem(billItem,medicine));
                     break;
                 }
             }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ViewModel;
+package Models.ViewModel;
 
 /**
  *
@@ -17,7 +17,7 @@ public class BillItem {
     private int cost;
     private int quantity;
     
-    public BillItem(DatabaseModel.BillItem billItem, DatabaseModel.Medicine medicine){
+    public BillItem(Models.DatabaseModel.BillItem billItem, Models.DatabaseModel.Medicine medicine){
         billID = billItem.getBillId();
         medicineID = medicine.getID();
         name = medicine.getName();

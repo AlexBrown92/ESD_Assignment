@@ -16,8 +16,8 @@
             </thead>
             <tbody>
                 <%
-                    ArrayList<DatabaseModel.Patient> patients;
-                    patients = (ArrayList<DatabaseModel.Patient>) request.getAttribute("patients");
+                    ArrayList<Models.DatabaseModel.Patient> patients;
+                    patients = (ArrayList<Models.DatabaseModel.Patient>) request.getAttribute("patients");
                     pageContext.setAttribute("patients", patients);
                 %>
                 <c:forEach items="${patients}" var="patient" >

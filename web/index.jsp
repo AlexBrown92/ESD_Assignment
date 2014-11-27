@@ -27,7 +27,7 @@
                     </li>
                     <%
                         String sidebar;
-                        DatabaseModel.User user = (DatabaseModel.User) request.getSession().getAttribute("user");
+                        Models.DatabaseModel.User user = (Models.DatabaseModel.User) request.getSession().getAttribute("user");
                         if (user != null) {
                             sidebar = "/WEB-INF/jspf/navbar.jspf";
                         } else {
