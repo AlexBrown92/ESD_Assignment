@@ -17,6 +17,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Bill {
 
+    public static HttpServletRequest payBill(HttpServletRequest request) {
+        int billID = Integer.parseInt(request.getParameter("billID"));
+
+        return request;
+    }
+
     public static HttpServletRequest viewBill(HttpServletRequest request) {
 
         int billID = Integer.parseInt(request.getParameter("billID"));

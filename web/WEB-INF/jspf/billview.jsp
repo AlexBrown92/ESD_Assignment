@@ -64,12 +64,56 @@
         <table class="table-condensed">
             <thead></thead>
             <tbody>
-                <tr><td><h4><label>Patient:</label></h4></td><td><h4><c:out value="${billView.patientName}" /></h4></td></tr>
-                <c:set value="${billView.dateCreated}" var="dateCreated" />
-                <tr><td><label>Date Created:</label></td><td><fmt:formatDate pattern="dd/MM/yyyy" value="${dateCreated}"/></td></tr>
-                <c:set value="${billView.datePaid}" var="datePaid" />
-                <tr><td><label>Date Paid</label></td><td><fmt:formatDate pattern="dd/MM/yyyy" value="${datePaid}"/></td></tr>
-                <tr><td><label for="txtConsulationCost">Consultation Cost:</label></td><td><input id="txtConsultationCost" name="txtConsultationCost" type="text" class="form-control" value="<c:out value="${billView.consultationCost}"/>"/></td><td><input type="button" value="Update" class="btn btn-sm btn-primary"></td></tr>
+                <tr>
+                    <td>
+                        <h4>
+                            <label>Patient:</label>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4><c:out value="${billView.patientName}" /></h4>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Date Created:</label>
+                    </td>
+                    <td>
+                        <c:set value="${billView.dateCreated}" var="dateCreated" />
+                        <fmt:formatDate pattern="dd/MM/yyyy" value="${dateCreated}"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Date Paid</label>
+                    </td>
+                    <td>
+                        <c:set value="${billView.datePaid}" var="datePaid" />
+                        <fmt:formatDate pattern="dd/MM/yyyy" value="${datePaid}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="txtConsulationCost">Consultation Cost:</label>
+                    </td>
+                    <td>
+                        <input id="txtConsultationCost" name="txtConsultationCost" type="text" class="form-control" 
+                               value="<c:out value="${billView.consultationCost}"/>"
+                               <c:if test="${billView.datePaid != null}">
+                                   disabled
+                               </c:if>
+                               />
+                    </td>
+                    <td>
+                        <input type="button" value="Update" class="btn btn-sm btn-primary
+                               <c:if test="${billView.datePaid != null}">
+                                   disabled
+                               </c:if>
+                               ">
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -101,8 +145,16 @@
                             <td><c:out value="${billItem.quantity}" /></td>
                             <td><c:out value="${billItem.cost}" /></td>
                             <td><c:out value="${billItem.total}"/></td>
-                            <td><input type="button" value="Edit" class="btn btn-sm btn-primary"></td>
-                            <td><input type="button" value="Remove" class="btn btn-sm btn-danger"/></td>
+                            <td><input type="button" value="Edit" class="btn btn-sm btn-primary
+                                       <c:if test="${billView.datePaid != null}">
+                                           disabled
+                                       </c:if>
+                                       "></td>
+                            <td><input type="button" value="Remove" class="btn btn-sm btn-danger
+                                       <c:if test="${billView.datePaid != null}">
+                                           disabled
+                                       </c:if>
+                                       "/></td>
                         </tr>
                     </c:forEach>
                 </c:otherwise>
@@ -112,17 +164,25 @@
                 <tr>
                     <td colspan="3" style="text-align:right"><strong>Total:</strong></td>
                     <td><c:out value="${billView.totalCost}"></c:out></td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-body">
-        <input type="button" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success"/>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <input type="button" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success 
+            <c:if test="${billView.datePaid != null}">
+                disabled
+            </c:if>>
+            "/>
 
-        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addMedicine">
+        <button type="button" class="btn btn-sm btn-primary 
+                <c:if test="${billView.datePaid != null}">
+                    disabled
+                </c:if>
+                " data-toggle="modal" data-target="#addMedicine">
             Add Medicine
         </button>
     </div>

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Patient {
 
-    public static HttpServletRequest ListPatients(HttpServletRequest request) {
+    public static HttpServletRequest listPatients(HttpServletRequest request) {
         Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
 
         ArrayList<Models.DatabaseModel.Patient> patients = patient.listAllPatients();
@@ -29,7 +29,7 @@ public class Patient {
         return request;
     }
 
-    public static HttpServletRequest ListPatientBill(HttpServletRequest request) {
+    public static HttpServletRequest listPatientBill(HttpServletRequest request) {
         Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
 
         int patientID = Integer.parseInt(request.getParameter("patient"));
@@ -59,7 +59,7 @@ public class Patient {
             patient.removePatient(patientID);
         }
 
-        return ListPatients(request);
+        return listPatients(request);
     }
 
     private static boolean canRemove(int patientID) {

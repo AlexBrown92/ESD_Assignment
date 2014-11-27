@@ -36,10 +36,10 @@ public class Controller extends HttpServlet {
                 request = Business.User.Logout(request);
                 break;
             case "/patientslist":
-                request = Business.Patient.ListPatients(request);
+                request = Business.Patient.listPatients(request);
                 break;
             case "/patientview":
-                request = Business.Patient.ListPatientBill(request);
+                request = Business.Patient.listPatientBill(request);
                 break;
             case "/patientremove":
                 request = Business.Patient.RemovePatient(request);

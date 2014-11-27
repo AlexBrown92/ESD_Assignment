@@ -74,7 +74,7 @@ public class Bill {
         this.consultationCost = consultationCost;
     }
 
-    public int getCost() {
+    public int getTotalCost() {
         return totalCost;
     }
 
