@@ -7,7 +7,7 @@
 </li> 
 <li>
     <div class="form-group col-sm-12"> 
-        <label for="password">Password </label>
+        <label for="password"> <font face = "verdana"> Password </font> </label>
     <input type="text" name="password" id="password" class="form-control"/>
     </div>
 </li>
