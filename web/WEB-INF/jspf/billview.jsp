@@ -53,8 +53,8 @@
                     <c:forEach items="${billItems}" var="billItem">
                         <tr>
                             <td>[name]</td>
-                            <td>[quantity]</td>
-                            <td>[cost]</td>
+                            <td><c:out value="${billItem.quanitity}"/></td>
+                            <td>[cost]/></td>
                             <td>[subtotal]</td>
                             <td><input type="button" value="Edit" class="btn btn-sm btn-primary"></td>
                             <td><input type="button" value="Remove" class="btn btn-sm btn-danger"/></td>
