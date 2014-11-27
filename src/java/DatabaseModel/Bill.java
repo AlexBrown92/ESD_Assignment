@@ -90,7 +90,7 @@ public class Bill {
         return findUserBill(patientId, true);
     }
 
-    public int getBillCost(int billId) {
+    public int getTotalCost(int billId) {
         int total = 0;
 
         String query = "SELECT ifNull(sum(`cost` * `quantity`),0) + `consultationCost` as `total` "

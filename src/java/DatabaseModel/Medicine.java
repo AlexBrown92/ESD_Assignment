@@ -14,7 +14,7 @@ public class Medicine {
 
     private int ID;
     private String name;
-    private String cost;
+    private int cost;
 
     
     public int getID() {
@@ -33,18 +33,18 @@ public class Medicine {
         this.name = name;
     }
 
-    public String getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
     public Medicine() {
         ID = 0;
         name = "";
-        cost = "";
+        cost = 0;
     }
 
     /**
@@ -69,7 +69,7 @@ public class Medicine {
                 Medicine newMedicine = new Medicine();
                 newMedicine.setID(rs.getInt("ID"));
                 newMedicine.setName(rs.getString("name"));
-                newMedicine.setCost(rs.getString("cost"));
+                newMedicine.setCost(rs.getInt("cost"));
                 medicines.add(newMedicine);
             }
             rs.close();

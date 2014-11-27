@@ -6,6 +6,9 @@
 package Business;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -21,19 +24,51 @@ public class Bill {
         DatabaseModel.Bill bill = new DatabaseModel.Bill();
 
         bill = bill.findBill(billID);
-        bill.setTotalCost(bill.getBillCost(billID));
+        bill.setTotalCost(bill.getTotalCost(billID));
 
         DatabaseModel.Patient patient = new DatabaseModel.Patient();
         patient = patient.findPatient(bill.getPatientId());
+        
+        ViewModel.BillView billView = new ViewModel.BillView();
 
+        billView.setBillID(billID);
+        billView.setConsultationCost(bill.getConsultationCost());
+        billView.setDateCreated(new Date(bill.getDateCreated().getTime()));
+        
+        if(bill.getDatePaid() != null){
+            billView.setDatePaid(new Date(bill.getDatePaid().getTime()));
+        }
+        else {
+            billView.setDatePaid(null);
+        }
+        
+        billView.setPatientID(patient.getID());
+        billView.setPatientName(patient.getName());
+        billView.setTotalCost(bill.getTotalCost(billID));
+        
         ArrayList<DatabaseModel.BillItem> billItems = DatabaseModel.BillItem.listBillItems(bill.getId());
         ArrayList<DatabaseModel.Medicine> medicines = DatabaseModel.Medicine.listMedicines();
-        request.setAttribute("patient", patient);
-        request.setAttribute("bill", bill);
-        request.setAttribute("billItems", billItems);
-        request.setAttribute("medicines", medicines);
+        billView.setMedicines(medicines);
+        billView.setBillItems(getBillItems(billItems, medicines));
+        
+        request.setAttribute("billView", billView); 
         request.setAttribute("view", "billview.jsp");
 
         return request;
+    }
+    
+    private static ArrayList<ViewModel.BillItem> getBillItems(ArrayList<DatabaseModel.BillItem> billItems, ArrayList<DatabaseModel.Medicine> medicines){
+        
+        ArrayList<ViewModel.BillItem> viewmodelbillItemArray = new ArrayList<>();
+        for(DatabaseModel.BillItem billItem : billItems){
+            for(DatabaseModel.Medicine medicine : medicines){
+                if(billItem.getMedicineId() == medicine.getID()){
+                    viewmodelbillItemArray.add(new ViewModel.BillItem(billItem,medicine));
+                    break;
+                }
+            }
+        }
+        
+        return viewmodelbillItemArray; 
     }
 }

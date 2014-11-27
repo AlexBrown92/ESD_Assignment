@@ -3,30 +3,73 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
-    DatabaseModel.Patient patient = (DatabaseModel.Patient) request.getAttribute("patient");
-    DatabaseModel.Bill bill = (DatabaseModel.Bill) request.getAttribute("bill");
-    ArrayList<DatabaseModel.BillItem> billItems = (ArrayList<DatabaseModel.BillItem>) request.getAttribute("billItems");
-    ArrayList<DatabaseModel.Medicine> medicines = (ArrayList<DatabaseModel.Medicine>) request.getAttribute("medicines");
-    pageContext.setAttribute("patient", patient);
-    pageContext.setAttribute("bill", bill);
+    ViewModel.BillView billView = (ViewModel.BillView) request.getAttribute("billView");
+    ArrayList<ViewModel.BillItem> billItems = billView.getBillItems();
+    ArrayList<DatabaseModel.Medicine> medicines = billView.getMedicines();
+    pageContext.setAttribute("billView", billView);
     pageContext.setAttribute("billItems", billItems);
     pageContext.setAttribute("medicines", medicines);
 %>
 
+<div class="modal fade" id="addMedicine" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add Medicine</h4>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <table>
+                        <thead></thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label>Medicine:</label>
+                                </td>
+                                <td>
+                                    <select>
+                                        <c:forEach items="${medicines}" var="medicine" >
+                                            <option value="${medicine.ID}"><c:out value="${medicine.name}"/></option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Quanitiy:</label>
+                                </td>
+                                <td>
+                                    <input type="text" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <submit type="button" class="btn btn-primary">Add Medicine</submit>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 <div class="page-header">
-    <h1 style="display: inline">Bill:&nbsp;<small><c:out value="${bill.id}"/></small></h1>
+    <h1 style="display: inline">Bill:&nbsp;<small><c:out value="${billView.billID}"/></small></h1>
 </div>
 <div class="panel panel-default">
     <div class="panel-body">
         <table class="table-condensed">
             <thead></thead>
             <tbody>
-                <tr><td><h4><label>Patient:</label></h4></td><td><h4><c:out value="${patient.name}" /></h4></td></tr>
-                <c:set value="${bill.dateCreated}" var="dateCreated" />
+                <tr><td><h4><label>Patient:</label></h4></td><td><h4><c:out value="${billView.patientName}" /></h4></td></tr>
+                <c:set value="${billView.dateCreated}" var="dateCreated" />
                 <tr><td><label>Date Created:</label></td><td><fmt:formatDate pattern="dd/MM/yyyy" value="${dateCreated}"/></td></tr>
-                <c:set value="${bill.datePaid}" var="datePaid" />
+                <c:set value="${billView.datePaid}" var="datePaid" />
                 <tr><td><label>Date Paid</label></td><td><fmt:formatDate pattern="dd/MM/yyyy" value="${datePaid}"/></td></tr>
-                <tr><td><label for="txtConsulationCost">Consultation Cost:</label></td><td><input id="txtConsultationCost" name="txtConsultationCost" type="text" class="form-control" value="<c:out value="${bill.consultationCost}"/>"/></td><td><input type="button" value="Update" class="btn btn-sm btn-primary"></td></tr>
+                <tr><td><label for="txtConsulationCost">Consultation Cost:</label></td><td><input id="txtConsultationCost" name="txtConsultationCost" type="text" class="form-control" value="<c:out value="${billView.consultationCost}"/>"/></td><td><input type="button" value="Update" class="btn btn-sm btn-primary"></td></tr>
             </tbody>
         </table>
     </div>
@@ -48,26 +91,27 @@
                 <c:choose>
                     <c:when test="${empty billItems}">
                     <td colspan="6" style="text-align:center"><h4><strong>No items</strong></h4></td>
-                    </c:when>
-                <c:otherwise>
+                            </c:when>
+                            <c:otherwise>
+
+
                     <c:forEach items="${billItems}" var="billItem">
                         <tr>
-                            <td>[name]</td>
-                            <td><c:out value="${billItem.quanitity}"/></td>
-                            <td>[cost]/></td>
-                            <td>[subtotal]</td>
+                            <td><c:out value="${billItem.name}"/></td>
+                            <td><c:out value="${billItem.quantity}" /></td>
+                            <td><c:out value="${billItem.cost}" /></td>
+                            <td><c:out value="${billItem.total}"/></td>
                             <td><input type="button" value="Edit" class="btn btn-sm btn-primary"></td>
                             <td><input type="button" value="Remove" class="btn btn-sm btn-danger"/></td>
                         </tr>
                     </c:forEach>
                 </c:otherwise>
-
             </c:choose>
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="3" style="text-align:right"><strong>Total:</strong></td>
-                    <td><c:out value="${bill.totalCost}"></c:out></td>
+                    <td><c:out value="${billView.totalCost}"></c:out></td>
                     <td></td>
                 </tr>
             </tfoot>
@@ -77,6 +121,10 @@
 <div class="panel panel-default">
     <div class="panel-body">
         <input type="button" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success"/>
-        <input type="button" value="Add Medicine" class="btn btn-sm btn-primary"/>
+
+        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addMedicine">
+            Add Medicine
+        </button>
     </div>
 </div>
+
