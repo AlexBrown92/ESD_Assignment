@@ -78,6 +78,21 @@ public class Patient {
 
         return allPatients;
     }
+    
+    public Patient findPatient(int id){
+        String query = "SELECT * FROM `patients` WHERE `id` = %d LIMIT 1;";
+        Utils.DBA dba = Helper.getDBA();
+        Patient p = new Patient();
+        try {
+            ResultSet rs = dba.executeQuery(String.format(query, id));
+            rs.next();
+            p.setID(rs.getInt("id"));
+            p.setName(rs.getString("name"));
+        }  catch (SQLException sqlEx) {
+            Helper.logException(sqlEx);
+        }
+        return p;
+    }
 
     public void removePatient(int patientID) {
 
