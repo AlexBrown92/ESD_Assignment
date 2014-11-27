@@ -96,7 +96,7 @@ public class Patient {
 
     public void removePatient(int patientID) {
 
-        String query = "insert into `deletedPatient` (`patientId`, `removalDate`) "
+        String query = "INSERT INTO `deletedPatient` (`patientId`, `removalDate`) "
                 + "values ('%d', '%s');";
 
         Utils.DBA dba = Helper.getDBA();
