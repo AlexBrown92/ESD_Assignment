@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Bill {
 
-    int id;
+ int id;
     int patientId;
     Timestamp dateCreated;
     Timestamp datePaid;
@@ -74,30 +74,30 @@ public class Bill {
         this.consultationCost = consultationCost;
     }
 
-    public int getTotalCost() {
+    public int getCost() {
         return totalCost;
     }
 
-    public void setTotalCost(int totalCost) {
-        this.totalCost = totalCost;
+    public void setTotalCost(int cost) {
+        this.totalCost = cost;
     }
 
-    public ArrayList<Bill> findUserPaidBill(int patientId) {
+    public ArrayList<Models.DatabaseModel.Bill> findUserPaidBill(int patientId) {
         return findUserBill(patientId, false);
     }
 
-    public ArrayList<Bill> findUserOutstandingBill(int patientId) {
+    public ArrayList<Models.DatabaseModel.Bill> findUserOutstandingBill(int patientId) {
         return findUserBill(patientId, true);
     }
 
-    public int getTotalCost(int billId) {
+    public int getBillTotalCost(int billId) {
         int total = 0;
 
-        String query = "SELECT ifNull(sum(`cost` * `quantity`),0) + `consultationCost` as `total` "
-                + "FROM  `bill`"
-                + "LEFT JOIN `billItem` on `bill`.`billId` = `billItem`.`billId` "
-                + "LEFT JOIN `medicine` on `billItem`.`medicineid` = `medicine`.`id` "
-                + "WHERE `bill`.`billId` = '%d' "
+        String query = "SELECT sum(`cost` * `quantity`) + `consultationCost` as `total` "
+                + "FROM `billItem` "
+                + "INNER JOIN `bill` on `bill`.`billId` = `billItem`.`billId` "
+                + "AND `bill`.`billId` = '%d' "
+                + "INNER JOIN `medicine` on `billItem`.`medicineid` = `medicine`.`id` "
                 + "group by `bill`.`billid`;";
 
         DBA dba = Helper.getDBA();
@@ -110,7 +110,7 @@ public class Bill {
                 while (rs.next()) {
                     total = rs.getInt("total");
                 }
-
+                
                 rs.close();
 
             }
@@ -123,7 +123,7 @@ public class Bill {
         return total;
     }
 
-    public ArrayList<Bill> findUserAllBill(int patientId) {
+    public ArrayList<Models.DatabaseModel.Bill> findUserAllBill(int patientId) {
         String query = "SELECT `bill`.`billId`, "
                 + "     `bill`.`patientId`, "
                 + "     `bill`.`dateCreated`, "
@@ -134,14 +134,14 @@ public class Bill {
 
         DBA dba = Helper.getDBA();
 
-        ArrayList<Bill> listOfBills = new ArrayList<>();
+        ArrayList<Models.DatabaseModel.Bill> listOfBills = new ArrayList<>();
         try {
             ResultSet rs = dba.executeQuery(String.format(query, patientId));
 
             if (rs != null) {
 
                 while (rs.next()) {
-                    Bill newBill = new Bill();
+                    Models.DatabaseModel.Bill newBill = new Models.DatabaseModel.Bill();
 
                     newBill.setId(rs.getInt("billId"));
                     newBill.setPatientId(rs.getInt("patientId"));
@@ -163,7 +163,7 @@ public class Bill {
         return listOfBills;
     }
 
-    private ArrayList<Bill> findUserBill(int patientId, boolean outStanding) {
+    private ArrayList<Models.DatabaseModel.Bill> findUserBill(int patientId, boolean outStanding) {
         String query = "SELECT `bill`.`billId`, "
                 + "     `bill`.`patientId`, "
                 + "     `bill`.`dateCreated`, "
@@ -178,14 +178,14 @@ public class Bill {
         }
         DBA dba = Helper.getDBA();
 
-        ArrayList<Bill> listOfBills = new ArrayList<>();
+        ArrayList<Models.DatabaseModel.Bill> listOfBills = new ArrayList<>();
         try {
             ResultSet rs = dba.executeQuery(String.format(query, patientId));
 
             if (rs != null) {
 
                 while (rs.next()) {
-                    Bill newBill = new Bill();
+                    Models.DatabaseModel.Bill newBill = new Models.DatabaseModel.Bill();
 
                     newBill.setId(rs.getInt("billId"));
                     newBill.setPatientId(rs.getInt("patientId"));
@@ -207,7 +207,7 @@ public class Bill {
         return listOfBills;
     }
 
-    public Bill findBill(int billId) {
+    public Models.DatabaseModel.Bill findBill(int billId) {
         String query = "SELECT `bill`.`billId`, "
                 + "     `bill`.`patientId`, "
                 + "     `bill`.`dateCreated`, "
@@ -235,7 +235,6 @@ public class Bill {
         }
         return this;
     }
-
     
-
+    
 }

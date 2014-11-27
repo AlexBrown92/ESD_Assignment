@@ -79,7 +79,7 @@ public class Patient {
 
     private static int setBillTotalCost(int billID) {
         Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
-        return bill.getTotalCost(billID);
+        return bill.getBillTotalCost(billID);
     }
 
 }

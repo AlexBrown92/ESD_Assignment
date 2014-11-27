@@ -24,8 +24,9 @@ public class Bill {
         Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
 
         bill = bill.findBill(billID);
-        bill.setTotalCost(bill.getTotalCost(billID));
+        bill.setTotalCost(bill.getBillTotalCost(billID));
 
+        
         Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
         patient = patient.findPatient(bill.getPatientId());
         
@@ -44,7 +45,7 @@ public class Bill {
         
         billView.setPatientID(patient.getID());
         billView.setPatientName(patient.getName());
-        billView.setTotalCost(bill.getTotalCost(billID));
+        billView.setTotalCost(bill.getBillTotalCost(billID));
         
         ArrayList<Models.DatabaseModel.BillItem> billItems = Models.DatabaseModel.BillItem.listBillItems(bill.getId());
         ArrayList<Models.DatabaseModel.Medicine> medicines = Models.DatabaseModel.Medicine.listMedicines();

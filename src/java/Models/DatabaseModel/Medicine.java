@@ -11,12 +11,10 @@ import java.util.ArrayList;
  * @author david
  */
 public class Medicine {
-
-    private int ID;
+   private int ID;
     private String name;
     private int cost;
 
-    
     public int getID() {
         return ID;
     }
@@ -79,8 +77,37 @@ public class Medicine {
             dba.closeConnections();
             Helper.logException(sqlEx);
         }
-
         return medicines;
+    }
+
+    public Medicine findMedicine(int id) {
+        String query = "SELECT * FROM `medicine` WHERE `id` = %d LIMIT 1;";
+        Utils.DBA dba = Helper.getDBA();
+        Medicine m = new Medicine();
+        try {
+            ResultSet rs = dba.executeQuery(String.format(query, id));
+            rs.next();
+            m.setID(rs.getInt("id"));
+            m.setName(rs.getString("name"));
+            m.setCost(rs.getInt("cost"));
+        } catch (SQLException sqlEx) {
+            Helper.logException(sqlEx);
+        }
+        return m;
+    }
+    
+    public void removePatient(int medicineID) {
+
+        String query = "insert into `deletedMedicine` (`medicineId`, `removalDate`) "
+                + "values ('%d', '%s');";
+
+        Utils.DBA dba = Helper.getDBA();
+
+        java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+        
+        dba.executeUpdate(String.format(query, medicineID, date.toString()));
+        dba.closeConnections();
+
     }
 
 }
