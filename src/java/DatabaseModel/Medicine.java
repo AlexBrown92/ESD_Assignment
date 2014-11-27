@@ -14,9 +14,8 @@ public class Medicine {
 
     private int ID;
     private String name;
-    private String cost;
+    private int cost;
 
-    
     public int getID() {
         return ID;
     }
@@ -33,18 +32,18 @@ public class Medicine {
         this.name = name;
     }
 
-    public String getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
     public Medicine() {
         ID = 0;
         name = "";
-        cost = "";
+        cost = 0;
     }
 
     /**
@@ -69,7 +68,7 @@ public class Medicine {
                 Medicine newMedicine = new Medicine();
                 newMedicine.setID(rs.getInt("ID"));
                 newMedicine.setName(rs.getString("name"));
-                newMedicine.setCost(rs.getString("cost"));
+                newMedicine.setCost(rs.getInt("cost"));
                 medicines.add(newMedicine);
             }
             rs.close();
@@ -79,8 +78,23 @@ public class Medicine {
             dba.closeConnections();
             Helper.logException(sqlEx);
         }
-
         return medicines;
+    }
+
+    public Medicine findMedicine(int id) {
+        String query = "SELECT * FROM `medicine` WHERE `id` = %d LIMIT 1;";
+        Utils.DBA dba = Helper.getDBA();
+        Medicine m = new Medicine();
+        try {
+            ResultSet rs = dba.executeQuery(String.format(query, id));
+            rs.next();
+            m.setID(rs.getInt("id"));
+            m.setName(rs.getString("name"));
+            m.setCost(rs.getInt("cost"));
+        } catch (SQLException sqlEx) {
+            Helper.logException(sqlEx);
+        }
+        return m;
     }
 
 }
