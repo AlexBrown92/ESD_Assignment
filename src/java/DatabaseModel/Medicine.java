@@ -96,5 +96,19 @@ public class Medicine {
         }
         return m;
     }
+    
+    public void removePatient(int medicineID) {
+
+        String query = "insert into `deletedMedicine` (`medicineId`, `removalDate`) "
+                + "values ('%d', '%s');";
+
+        Utils.DBA dba = Helper.getDBA();
+
+        java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+        
+        dba.executeUpdate(String.format(query, medicineID, date.toString()));
+        dba.closeConnections();
+
+    }
 
 }
