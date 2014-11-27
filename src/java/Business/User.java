@@ -28,7 +28,7 @@ public class User {
             request.setAttribute("view", "homepage.jsp");
         } else {
             request.getSession().invalidate();
-            request.setAttribute("view", "errorgeneric.jspf");
+            request.setAttribute("view", "error404.jspf");
         }
 
         return request;

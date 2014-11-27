@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Dr Fatal | Management Information System</title>
+        <title> Dr Fatal | Management Information System</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/simple-sidebar.css" rel="stylesheet">
     </head>
