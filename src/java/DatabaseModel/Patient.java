@@ -6,6 +6,7 @@
 package DatabaseModel;
 
 import Utils.Helper;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Patient {
 
     private int ID;
     private String name;
-    private boolean canRemove;
+    private boolean removable;
 
     public Patient() {
         ID = 0;
@@ -41,16 +42,21 @@ public class Patient {
         this.name = name;
     }
 
-    public void setCanRemove(boolean canRemove) {
-        this.canRemove = canRemove;
+    public void setRemovable(boolean removable) {
+        this.removable = removable;
     }
 
-    public boolean canRemove() {
-        return canRemove;
+    public boolean isRemovable() {
+        return removable;
     }
 
     public ArrayList<Patient> listAllPatients() {
-        String query = "SELECT * FROM patients";
+        String query = "SELECT  `patients`.`ID`" 
+                             +",`patients`.`name`" 
+                      + "FROM  	`patients`" 
+                      + "LEFT JOIN `deletedPatient` ON `patients`.`ID` = `deletedPatient`.`patientId` "
+                      + "WHERE `deletedPatient`.`patientId` IS NULL;" ;
+        
         ArrayList<Patient> allPatients = new ArrayList<>();
         Utils.DBA dba = Helper.getDBA();
         ResultSet rs;
@@ -87,4 +93,19 @@ public class Patient {
         }
         return p;
     }
+
+    public void removePatient(int patientID) {
+
+        String query = "insert into `deletedPatient` (`patientId`, `removalDate`) "
+                + "values ('%d', '%s');";
+
+        Utils.DBA dba = Helper.getDBA();
+
+        java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+        
+        dba.executeUpdate(String.format(query, patientID, date.toString()));
+        dba.closeConnections();
+
+    }
+
 }

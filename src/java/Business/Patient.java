@@ -20,7 +20,7 @@ public class Patient {
         ArrayList<DatabaseModel.Patient> patients = patient.listAllPatients();
 
         for (DatabaseModel.Patient thisPatient : patients) {
-            thisPatient.setCanRemove(setCanRemove(patient.getID()));
+            thisPatient.setRemovable(canRemove(thisPatient.getID()));
         }
 
         request.setAttribute("patients", patients);
@@ -35,22 +35,34 @@ public class Patient {
         int patientID = Integer.parseInt(request.getParameter("patient"));
 
         ArrayList<DatabaseModel.Patient> patients = patient.listAllPatients();
-        
-        
+
         DatabaseModel.Bill bill = new DatabaseModel.Bill();
 
-                
-        ArrayList<DatabaseModel.Bill> patientPaidBills = bill.findUserPaidBill(patientID);
-        ArrayList<DatabaseModel.Bill> patientOutstandingBills = bill.findUserOutstandingBill(patientID);
-    
+        ArrayList<DatabaseModel.Bill> bills = bill.findUserAllBill(patientID);
 
-        request.setAttribute("patients", patients);
+        for (DatabaseModel.Bill thisBill : bills) {
+            thisBill.setCost(setBillCost(thisBill.getId()));
+        }
+
+        request.setAttribute("patient", patients.get(0));
+        request.setAttribute("bills", bills);
         request.setAttribute("view", "patientview.jsp");
 
         return request;
     }
 
-    private static boolean setCanRemove(int patientID) {
+    public static HttpServletRequest RemovePatient(HttpServletRequest request) {
+        int patientID = Integer.parseInt(request.getParameter("patient"));
+
+        if (canRemove(patientID)) {
+            DatabaseModel.Patient patient = new DatabaseModel.Patient();
+            patient.removePatient(patientID);
+        }
+        
+        return ListPatients(request);
+    }
+
+    private static boolean canRemove(int patientID) {
         boolean canRemove = false;
 
         DatabaseModel.Bill bill = new DatabaseModel.Bill();
@@ -63,6 +75,12 @@ public class Patient {
         }
 
         return canRemove;
+    }
+
+    private static int setBillCost(int billID) {
+        DatabaseModel.Bill bill = new DatabaseModel.Bill();
+
+        return bill.getBillCost(billID);
     }
 
 }

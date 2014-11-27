@@ -28,7 +28,12 @@
                         </form>
                     </td>
                     <td><form action="patientremove" method="post">
-                            <input type="submit" value="Remove" name="patient${patient.ID}" class="btn btn-sm btn-danger"/>
+                            <input type="submit" value="Remove" name="patient${patient.ID}" class="btn btn-sm btn-danger
+                            <c:if test="${patient.removable == false}">
+                                disabled
+                            </c:if>
+                            " />
+                            <input type="hidden" value="${patient.ID}" name="patient" />
                         </form>
                     </td>
                 </tr>

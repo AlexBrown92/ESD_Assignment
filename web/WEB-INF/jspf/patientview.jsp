@@ -1,7 +1,13 @@
 <%@page import="java.util.ArrayList"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+    DatabaseModel.Patient patient = (DatabaseModel.Patient) request.getAttribute("patient");
+    pageContext.setAttribute("patient", patient);
+%>
+
 <div>
-    <h1>Bills for [customer name]</h1>
+    <h1>Bills for <c:out value="${patient.name}" /> </h1>
 </div>
 <div>
     <table  class="table table-hover table-striped">
@@ -16,22 +22,29 @@
         </thead>
         <tbody>
             <%
-                    ArrayList<DatabaseModel.Bill> bills = (ArrayList<DatabaseModel.Bill>)request.getAttribute("bills");
-                    pageContext.setAttribute("bills", bills); 
+                ArrayList<DatabaseModel.Bill> bills = (ArrayList<DatabaseModel.Bill>) request.getAttribute("bills");
+                pageContext.setAttribute("bills", bills);
             %>
             <c:forEach items="${bills}" var="bill">
-                  <tr>
-                    <td>${bill}.ID</td>
-                    <td>${bill}.Cost</td>
-                    <td>${bill}.DatePaid</td>
+                <tr>
+                    <td>${bill.id}</td>
+                    <td>${bill.cost}</td>
                     <td>
-                        <form action="" method="post">
+                        <c:set var="billDate" value="${bill.datePaid}" />
+                        <fmt:formatDate pattern="dd/MM/yyyy" value="${billDate}" />
+                    </td>
+                    <td>
+                        <form action="billView" method="post">
                             <input type="submit" value="View Details" class="btn btn-sm btn-primary"/>
+                            <input type="hidden" value="${bill.id}" name="billID"/>
                         </form>
                     </td>
                     <td>
-                        <form action="" method="post">
-                            <input type="submit" value="Pay" class="btn btn-sm btn-success"/>
+                        <form action="billPay" method="post">
+                            <c:if test="${bill.datePaid == null}">
+                                <input type="submit" value="Pay" class="btn btn-sm btn-success"/>
+                                <input type="hidden" value="${bill.id}" name="billID" />
+                            </c:if>
                         </form>
                     </td>
                 </tr>
