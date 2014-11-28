@@ -14,7 +14,7 @@
     <a href="#">Add new Patient</a>
 </li>
 <li>
-    <a href="#">Add new Medicine</a>
+    <a href="addmedicine">Add new Medicine</a>
 </li>
 <li>
     <a href="logout">Log out</a>

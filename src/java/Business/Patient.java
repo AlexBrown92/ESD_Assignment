@@ -41,7 +41,7 @@ public class Patient {
         ArrayList<Models.ViewModel.Bill> viewBills = new ArrayList<>();
 
         for (Models.DatabaseModel.Bill thisBill : bills) {
-            Models.ViewModel.Bill viewBill = new Models.ViewModel.Bill(thisBill);
+            Models.ViewModel.Bill viewBill = new Models.ViewModel.Bill(thisBill,patient,0);
             viewBill.setTotalCost(Models.DatabaseModel.Bill.getBillTotalCost(thisBill.getId()));
             viewBills.add(viewBill);
         }

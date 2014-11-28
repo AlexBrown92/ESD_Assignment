@@ -114,11 +114,20 @@ public class Medicine {
     public static void updateMedicine(int medicineID, int cost, String name) {
         String query = "UPDATE `medicine` "
                 + "SET `medicine`.`cost` = '%d' "
-                + ",`medicine`.`name` = '%s' "    
+                + ",`medicine`.`name` = '%s' "
                 + "WHERE `medicine`.`id` = '%d'; ";
 
         Utils.DBA dba = Helper.getDBA();
-        dba.executeUpdate(String.format(query, cost, name,medicineID));
+        dba.executeUpdate(String.format(query, cost, name, medicineID));
+        dba.closeConnections();
+    }
+
+    public static void createMedicine(int cost, String name) {
+        String query = "INSERT INTO `medicine` (`medicine`.`name`, `medicine`.`cost`)"
+                + "VALUES ('%s', '%d');";
+
+        Utils.DBA dba = Helper.getDBA();
+        dba.executeUpdate(String.format(query, name, cost));
         dba.closeConnections();
     }
 

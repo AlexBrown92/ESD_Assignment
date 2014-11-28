@@ -3,8 +3,52 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     ArrayList<Models.DatabaseModel.Medicine> medicines = (ArrayList<Models.DatabaseModel.Medicine>) request.getAttribute("medicines");
+    boolean addmedicine = (boolean)request.getAttribute("addmedicine");
     pageContext.setAttribute("medicines", medicines);
+    pageContext.setAttribute("addmedicine", addmedicine);
 %>
+
+<div class="modal fade" id="addMedicineModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add Medicine</h4>
+            </div>
+            <form action="medicinelistaddmedicine" method="post">
+                <div class="modal-body">
+                    <table>
+                        <thead></thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="medicine">Medicine:</label>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="quantity">Cost:</label>
+                                </td>
+                                <td>
+                                    <input type="number" name="cost" class="form-control" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Add Medicine</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 <div class="modal fade" id="editMedicineModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -90,8 +134,17 @@
             </tbody>
         </table>
     </div>
+    <div class="panel-body">
+        <input type="button" class="btn btn-primary btn-sm" value="Add Medicine" data-toggle="modal" data-target="#addMedicineModal"/>
+    </div>
 </div>
+
 <script type="text/javascript">
+    <c:if test="${addmedicine == true}">
+    $(function () {
+        $("#addMedicineModal").modal("show");
+    });
+    </c:if>
     function editMedicine(medicineID, medicineName, medicineCost) {
         $("#editMedicineID").val(medicineID);
         $("#editMedicineName").val(medicineName);
