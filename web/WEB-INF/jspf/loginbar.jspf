@@ -1,14 +1,14 @@
 <form action="login" method="post" role="form"/>
 <li>
-    <div class="form-group col-sm-11"> 
-        <label for="username" class="pull-left" style="color:#bbbbbb; text-indent:10px;">User</label>
+    <div class="form-group col-sm-12"> 
+        <label  for="username"> <font face = "verdana"> User </font>   </label>
         <input type="text" name="username" id="username" class="form-control"/>
     </div>
-</li>
+</li> 
 <li>
-    <div class="form-group col-sm-11"> 
-        <label for="password" class="pull-left" style="color:#bbbbbb; text-indent:10px;">Password</label>
-        <input type="text" name="password" id="password" class="form-control"/>
+    <div class="form-group col-sm-12"> 
+        <label for="password"> <font face = "verdana"> Password </font> </label>
+    <input type="text" name="password" id="password" class="form-control"/>
     </div>
 </li>
 <li>
