@@ -97,24 +97,27 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="txtConsulationCost">Consultation Cost:</label>
+                        <label for="consultationCost">Consultation Cost:</label>
                     </td>
-                    <td>
-                        <input id="txtConsultationCost" name="txtConsultationCost" type="text" class="form-control" 
-                               value="<c:out value="${billView.consultationCost}"/>"
-                               <c:if test="${billView.datePaid != null}">
-                                   disabled
-                               </c:if>
-                               />
-                    </td>
-                    <td>
-                        <input type="button" value="Update" class="btn btn-sm btn-primary
-                               <c:if test="${billView.datePaid != null}">
-                                   disabled
-                               </c:if>
-                               ">
-                    </td>
-                </tr>
+            <form action="billviewconsultationcost" method="post">
+                <td>
+                    <input id="consultationCost" name="consultationCost" type="text" class="form-control" 
+                           value="<c:out value="${billView.consultationCost}"/>"
+                           <c:if test="${billView.datePaid != null}">
+                               disabled
+                           </c:if>
+                           />
+                </td>
+                <td>
+                    <input type="submit" value="Update" class="btn btn-sm btn-primary
+                           <c:if test="${billView.datePaid != null}">
+                               disabled
+                           </c:if>
+                           ">
+                    <input type="hidden" name="billID" value="<c:out value="${billView.billID}" />" />
+                </td>
+            </form>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -151,11 +154,18 @@
                                            disabled
                                        </c:if>
                                        "></td>
-                            <td><input type="button" value="Remove" class="btn btn-sm btn-danger
-                                       <c:if test="${billView.datePaid != null}">
-                                           disabled
-                                       </c:if>
-                                       "/></td>
+                            <td>
+                                <form action="billviewremove" method="post">
+                                    <input type="submit" value="Remove" class="btn btn-sm btn-danger
+                                           <c:if test="${billView.datePaid != null}">
+                                               disabled
+                                           </c:if>
+                                           "/>
+                                    <input type="hidden" value="<c:out value="${billItem.billID}"/>" name="billID"/>
+                                    <input type="hidden" value="<c:out value="${billItem.medicineID}"/>" name="medicineID"/>
+
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </c:otherwise>
@@ -174,13 +184,13 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <form action="billviewpaybill" method="post" style="display:inline">
-            <input type="submit" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success 
-            <c:if test="${billView.datePaid != null}">
-                disabled
-            </c:if>>
-            "/>
+                <input type="submit" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success 
+                <c:if test="${billView.datePaid != null}">
+                    disabled
+                </c:if>>
+                "/>
             <input type="hidden" name="billID" value="${billView.billID}" />
-            </form>
+        </form>
         <button type="button" class="btn btn-sm btn-primary 
                 <c:if test="${billView.datePaid != null}">
                     disabled

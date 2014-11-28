@@ -247,4 +247,15 @@ public class Bill {
 
     }
 
+    public static void updateConsultationCost(int billID, int consultationCost) {
+        String query = "UPDATE `bill` "
+                + "SET `bill`.`consultationCost` = '%d' "
+                + "WHERE `billId` = '%d';";
+        Utils.DBA dba = Helper.getDBA();
+
+        dba.executeUpdate(String.format(query, consultationCost, billID));
+        dba.closeConnections();
+
+    }
+
 }

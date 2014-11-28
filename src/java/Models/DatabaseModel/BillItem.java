@@ -133,9 +133,9 @@ public class BillItem {
         }
 
         if (exists > 0) {
-            BillItem billItem = new BillItem(); 
+            BillItem billItem = new BillItem();
             billItem.findBillItem(billID, medicineID);
-            quantity += billItem.getQuanitity(); 
+            quantity += billItem.getQuanitity();
             updateBillItem(billID, medicineID, quantity);
         } else {
             createBillItem(billID, medicineID, quantity);
@@ -162,4 +162,15 @@ public class BillItem {
         dba.executeUpdate(String.format(query, quantity, billID, medicineID));
         dba.closeConnections();
     }
+
+    public static void removeBillItem(int billID, int medicineID) {
+        String query = "DELETE FROM `billItem`"
+                + "WHERE `billItem`.`billId` = '%d'"
+                + "AND  `billItem`.`medicineid` = '%d';";
+        DBA dba = Helper.getDBA();
+        dba.executeUpdate(String.format(query,  billID, medicineID));
+        dba.closeConnections();
+
+    }
+
 }

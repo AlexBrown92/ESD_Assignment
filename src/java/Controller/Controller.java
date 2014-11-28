@@ -59,6 +59,15 @@ public class Controller extends HttpServlet {
                 request = Business.Bill.addMedicine(request);
                 request = Business.Bill.viewBill(request);
                 break;
+            case "/billviewremove":
+                request = Business.Bill.removeMedicine(request);
+                request = Business.Bill.viewBill(request);
+                break;
+            case "/billviewconsultationcost":
+                request = Business.Bill.updateConsultationCost(request);
+                request = Business.Bill.viewBill(request);
+                break;
+
             default:
                 response.setStatus(401);
                 request.setAttribute("view", "");

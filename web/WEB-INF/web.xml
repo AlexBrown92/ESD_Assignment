@@ -32,6 +32,8 @@
         <url-pattern>/billview</url-pattern>
         <url-pattern>/billviewpaybill</url-pattern>
         <url-pattern>/billviewaddmedicine</url-pattern> 
+        <url-pattern>/billviewremove</url-pattern>
+        <url-pattern>/billviewconsultationcost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

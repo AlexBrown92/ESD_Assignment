@@ -7,10 +7,6 @@ package Business;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -85,10 +81,30 @@ public class Bill {
     public static HttpServletRequest addMedicine(HttpServletRequest request) {
         int billID = Integer.parseInt(request.getParameter("billID"));
         int medicineID = Integer.parseInt(request.getParameter("medicineID"));
-        int quantity = Integer.parseInt(request.getParameter("quantity")); 
-        
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+
         Models.DatabaseModel.BillItem.addBillItem(billID, medicineID, quantity);
-        
+
         return request;
+    }
+
+    public static HttpServletRequest removeMedicine(HttpServletRequest request) {
+        int billID = Integer.parseInt(request.getParameter("billID"));
+        int medicineID = Integer.parseInt(request.getParameter("medicineID"));
+
+        Models.DatabaseModel.BillItem.removeBillItem(billID, medicineID);
+
+        return request;
+
+    }
+
+    public static HttpServletRequest updateConsultationCost(HttpServletRequest request) {
+        int billID = Integer.parseInt(request.getParameter("billID"));
+        int consultationCost = Integer.parseInt(request.getParameter("consultationCost"));
+
+        Models.DatabaseModel.Bill.updateConsultationCost(billID, consultationCost);
+
+        return request;
+
     }
 }
