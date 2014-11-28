@@ -1,7 +1,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     Models.ViewModel.Bill billView = (Models.ViewModel.Bill) request.getAttribute("billView");
     ArrayList<Models.ViewModel.BillItem> billItems = billView.getBillItems();
@@ -228,7 +228,7 @@
                 <input type="submit" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success 
                 <c:if test="${billView.datePaid != null}">
                     disabled
-                </c:if>>
+                </c:if>
                 "/>
             <input type="hidden" name="billID" value="${billView.billID}" />
         </form>

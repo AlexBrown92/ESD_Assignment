@@ -112,9 +112,9 @@ public class Bill {
         for (Models.DatabaseModel.Bill bill : bills) {
             Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
 
-            int totalCost = bill.getBillTotalCost(bill.getId());
+            int totalCost = Models.DatabaseModel.Bill.getBillTotalCost(bill.getId());
 
-            patient.findPatient(bill.getPatientId());
+            patient = patient.findPatient(bill.getPatientId());
 
             Models.ViewModel.Bill viewBill = new Models.ViewModel.Bill(bill, patient, totalCost);
 
