@@ -28,11 +28,19 @@
                                     <label for="medicine">Medicine:</label>
                                 </td>
                                 <td>
-                                    <select name="medicineID" id="medicine" class="form-control">
+                                    <select name="medicineID" id="ddMedicine" class="form-control" onchange="updateCost()">
                                         <c:forEach items="${medicines}" var="medicine" >
-                                            <option value="${medicine.ID}"><c:out value="${medicine.name}"/></option>
+                                            <option value="${medicine.ID}" data-cost="<c:out value="${medicine.cost}"/>"><c:out value="${medicine.name}"/> </option>
                                         </c:forEach>
                                     </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="txtCost">Cost:</label>
+                                </td>
+                                <td>
+                                    <h4 id="txtCost" class="form-control" style="background-color:rgb(238, 238, 238)"><c:out value="${medicines.get(0).cost}"/></h4>
                                 </td>
                             </tr>
                             <tr>
@@ -40,7 +48,15 @@
                                     <label for="quantity">Quantity:</label>
                                 </td>
                                 <td>
-                                    <input type="number" id="quantity" name="quantity" class="form-control" />
+                                    <input type="number" id="txtQuantity" name="quantity" class="form-control" onchange="updateSubtotal()" onblur="updateSubtotal()"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="quantity">Sub Total:</label>
+                                </td>
+                                <td>
+                                    <h4 id="txtSubTotal" class="form-control" style="background-color:rgb(238, 238, 238)">0</h4>
                                 </td>
                             </tr>
                         </tbody>
@@ -79,10 +95,26 @@
                             </tr>
                             <tr>
                                 <td>
+                                    <label for="txtCost">Cost:</label>
+                                </td>
+                                <td>
+                                    <h4 id="editCost" class="form-control" style="background-color:rgb(238, 238, 238)"></h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <label for="editQuantity">Quantity:</label>
                                 </td>
                                 <td>
-                                    <input id="editQuantity" type="number"  name="quantity" class="form-control" />
+                                    <input id="editQuantity" type="number"  name="quantity" class="form-control" onchange="updateEditSubtotal()" onblur="updateEditSubtotal()"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="editSubTotal">SubTotal:</label>
+                                </td>
+                                <td>
+                                    <h4 id="editSubTotal" class="form-control" style="background-color:rgb(238, 238, 238)"></h4>
                                 </td>
                             </tr>
                         </tbody>
@@ -152,10 +184,10 @@
                            />
                 </td>
                 <c:if test="${billView.datePaid == null}">
-                <td>
-                    <input type="submit" value="Update" class="btn btn-sm btn-primary">
-                    <input type="hidden" name="billID" value="<c:out value="${billView.billID}" />" />
-                </td>
+                    <td>
+                        <input type="submit" value="Update" class="btn btn-sm btn-primary">
+                        <input type="hidden" name="billID" value="<c:out value="${billView.billID}" />" />
+                    </td>
                 </c:if>
             </form>
             </tr>
@@ -196,7 +228,7 @@
                                 <td><c:out value="${billItem.total}"/></td>
                                 <c:if test="${billView.datePaid == null}">
                                     <td>
-                                        <input type="button" value="Edit" class="btn btn-sm btn-primary" onclick="populateEditMedicine('${billItem.name}', '${billItem.quantity}', '${billItem.medicineID}')">
+                                        <input type="button" value="Edit" class="btn btn-sm btn-primary" onclick="populateEditMedicine('${billItem.name}', '${billItem.quantity}', '${billItem.cost}','${billItem.medicineID}')">
                                     </td>
                                     <td>
                                         <form action="billviewremove" method="post">
@@ -236,10 +268,33 @@
 </div>
 
 <script type="text/javascript">
-    function populateEditMedicine(medicineName, quantity, medicineID) {
+    function populateEditMedicine(medicineName, quantity, cost, medicineID) {
         $("#editMedicineName").val(medicineName);
         $("#editQuantity").val(quantity);
+        $("#editCost").html(cost);
         $("#editMedicineID").val(medicineID);
         $("#editMedicine").modal("show");
+        updateEditSubtotal();
+    }
+
+    function updateEditSubtotal(){
+        var cost = $("#editCost").html();
+        var quantity = $("#editQuantity").val();
+        var subtotal = cost * quantity;
+        $("#editSubTotal").html(subtotal); 
+    }
+
+
+
+    function updateCost() {
+        var cost = $("#ddMedicine option:selected").data("cost");
+        $("#txtCost").html(cost);
+    }
+    
+    function updateSubtotal(){
+        var cost = $("#ddMedicine option:selected").data("cost");
+        var quantity = $("#txtQuantity").val();
+        var subtotal = cost * quantity;
+        $("#txtSubTotal").html(subtotal); 
     }
 </script>

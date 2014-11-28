@@ -33,5 +33,14 @@ public class Medicine {
         return request;
 
     }
+    
+    public static HttpServletRequest createMedicine(HttpServletRequest request) {
+        int cost = Integer.parseInt(request.getParameter("cost"));
+        String name = request.getParameter("name");
+        
+        Models.DatabaseModel.Medicine.createMedicine(cost, name);
 
+        return request;
+
+    }
 }

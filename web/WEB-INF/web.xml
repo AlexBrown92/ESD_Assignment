@@ -39,6 +39,7 @@
         <url-pattern>/billlistpaybill</url-pattern>
         <url-pattern>/medicinelist</url-pattern>
         <url-pattern>/medicinelistupdatemedicine</url-pattern>
+        <url-pattern>/medicinelistaddmedicine</url-pattern>
         
     </servlet-mapping>
     <session-config>
