@@ -11,7 +11,8 @@ import java.util.ArrayList;
  * @author david
  */
 public class Medicine {
-   private int ID;
+
+    private int ID;
     private String name;
     private int cost;
 
@@ -95,8 +96,8 @@ public class Medicine {
         }
         return m;
     }
-    
-  public void removeMedicine(int medicineID) {
+
+    public void removeMedicine(int medicineID) {
 
         String query = "insert into `deletedMedicine` (`medicineId`, `removalDate`) "
                 + "values ('%d', '%s');";
@@ -104,10 +105,20 @@ public class Medicine {
         Utils.DBA dba = Helper.getDBA();
 
         java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
-        
+
         dba.executeUpdate(String.format(query, medicineID, date.toString()));
         dba.closeConnections();
 
+    }
+
+    public static void updateMedicine(int medicineID, int cost) {
+        String query = "UPDATE `medicine` "
+                + "SET `medicine`.`cost` = '%d' "
+                + "WHERE `medicine`.`id` = '%d'; ";
+
+        Utils.DBA dba = Helper.getDBA();
+        dba.executeUpdate(String.format(query, cost, medicineID));
+        dba.closeConnections();
     }
 
 }

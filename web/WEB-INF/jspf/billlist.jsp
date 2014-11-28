@@ -62,7 +62,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="billviewpaybill" method="post" style="display:inline">
+                                    <form action="billlistpaybill" method="post" style="display:inline">
                                         <input type="submit" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success 
                                                <c:if test="${bill.datePaid != null}">
                                                    disabled
