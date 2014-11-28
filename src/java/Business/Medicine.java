@@ -26,8 +26,9 @@ public class Medicine {
     public static HttpServletRequest updateMedicine(HttpServletRequest request) {
         int medicineID = Integer.parseInt(request.getParameter("medicineID"));
         int cost = Integer.parseInt(request.getParameter("cost"));
-
-        Models.DatabaseModel.Medicine.updateMedicine(medicineID, cost);
+        String name = request.getParameter("name");
+        
+        Models.DatabaseModel.Medicine.updateMedicine(medicineID, cost, name);
 
         return request;
 

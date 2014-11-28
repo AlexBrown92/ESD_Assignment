@@ -111,13 +111,14 @@ public class Medicine {
 
     }
 
-    public static void updateMedicine(int medicineID, int cost) {
+    public static void updateMedicine(int medicineID, int cost, String name) {
         String query = "UPDATE `medicine` "
                 + "SET `medicine`.`cost` = '%d' "
+                + ",`medicine`.`name` = '%s' "    
                 + "WHERE `medicine`.`id` = '%d'; ";
 
         Utils.DBA dba = Helper.getDBA();
-        dba.executeUpdate(String.format(query, cost, medicineID));
+        dba.executeUpdate(String.format(query, cost, name,medicineID));
         dba.closeConnections();
     }
 

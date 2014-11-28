@@ -61,15 +61,13 @@
                                         <input type="hidden" value="${bill.billID}" name="billID"/>
                                     </form>
                                 </td>
-                                <td>
-                                    <form action="billlistpaybill" method="post" style="display:inline">
-                                        <input type="submit" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success 
-                                               <c:if test="${bill.datePaid != null}">
-                                                   disabled
-                                               </c:if>
-                                               "/>
-                                        <input type="hidden" name="billID" value="${bill.billID}" />
-                                    </form>
+                                <td>    
+                                    <c:if test="${bill.datePaid == null}">
+                                        <form action="billlistpaybill" method="post" style="display:inline">
+                                            <input type="submit" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success "/>
+                                            <input type="hidden" name="billID" value="${bill.billID}" />
+                                        </form>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>

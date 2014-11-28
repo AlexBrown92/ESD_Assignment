@@ -22,7 +22,7 @@
                                     <label for="medicine">Medicine:</label>
                                 </td>
                                 <td>
-                                    <input type="text" id="editMedicineName" class="form-control disabled"/>
+                                    <input type="text" id="editMedicineName" class="form-control" name="name"/>
                                 </td>
                             </tr>
                             <tr>
@@ -38,7 +38,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Add Medicine</button>
+                    <button type="submit" class="btn btn-primary">Update Medicine</button>
                     <input type="hidden" name="medicineID" id="editMedicineID"/>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
