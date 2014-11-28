@@ -27,14 +27,20 @@
         <url-pattern>/logout</url-pattern>
         <url-pattern>/patientslist</url-pattern>
         <url-pattern>/patientview</url-pattern>
-         <url-pattern>/patientremove</url-pattern>
+        <url-pattern>/patientremove</url-pattern>
+        <url-pattern>/patientviewpaybill</url-pattern>
+        <url-pattern>/billview</url-pattern>
+        <url-pattern>/billviewpaybill</url-pattern>
+        <url-pattern>/billviewaddmedicine</url-pattern> 
+        <url-pattern>/billviewremove</url-pattern>
+        <url-pattern>/billviewconsultationcost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>
     </session-config>
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/jspf/error404.jspf</location>
+        <location>/WEB-INF/jspf/error404.jsp</location>
     </error-page>
     <error-page>
         <exception-type>generic error</exception-type>
@@ -42,6 +48,6 @@
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/WEB-INF/jspf/error404.jspf</location>
+        <location>/WEB-INF/jspf/error404.jsp</location>
     </error-page>
 </web-app>

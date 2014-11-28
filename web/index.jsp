@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Dr Fatal | Management Information System</title>
+        <title> Dr Fatal | Management Information System</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/simple-sidebar.css" rel="stylesheet">
     </head>
@@ -27,7 +27,7 @@
                     </li>
                     <%
                         String sidebar;
-                        DatabaseModel.User user = (DatabaseModel.User) request.getSession().getAttribute("user");
+                        Models.DatabaseModel.User user = (Models.DatabaseModel.User) request.getSession().getAttribute("user");
                         if (user != null) {
                             sidebar = "/WEB-INF/jspf/navbar.jspf";
                         } else {
@@ -43,17 +43,17 @@
                     <div class="container-fluid">
                     <%
                         String view = (String) request.getAttribute("view");
-                        if (view == null) {
-                            
+                        if ((view == null) | (user == null)) {
                             view = "homepage.jsp";
                         }
                         view = "/WEB-INF/jspf/" + view;
                     %>  
                     <jsp:include page="<%=view%>"></jsp:include>
+                    
                 </div>
             </div>
         </div>
-        <script src="js/jquery.js"></script>
+        <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </body>
 </html>

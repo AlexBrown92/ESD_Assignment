@@ -30,24 +30,44 @@ public class Controller extends HttpServlet {
         //Chooses which business object is responsible for the interaction
         switch (url) {
             case "/login":
-                request = Business.User.Login(request);
+                request = Business.User.login(request);
                 break;
             case "/logout":
-                request = Business.User.Logout(request);
+                request = Business.User.logout(request);
                 break;
             case "/patientslist":
-                request = Business.Patient.ListPatients(request);
+                request = Business.Patient.listPatients(request);
                 break;
             case "/patientview":
-                request = Business.Patient.ListPatientBill(request);
+                request = Business.Patient.listAPatientBills(request);
                 break;
             case "/patientremove":
-                request = Business.Patient.RemovePatient(request);
+                request = Business.Patient.removePatient(request);
                 break;
-            case "/billPay":
+            case "/patientviewpaybill":
+                request = Business.Bill.payBill(request);
+                request = Business.Patient.listAPatientBills(request);
                 break;
-            case "/billView":
-                break; 
+            case "/billview":
+                request = Business.Bill.viewBill(request);
+                break;
+            case "/billviewpaybill":
+                request = Business.Bill.payBill(request);
+                request = Business.Bill.viewBill(request);
+                break;
+            case "/billviewaddmedicine":
+                request = Business.Bill.addMedicine(request);
+                request = Business.Bill.viewBill(request);
+                break;
+            case "/billviewremove":
+                request = Business.Bill.removeMedicine(request);
+                request = Business.Bill.viewBill(request);
+                break;
+            case "/billviewconsultationcost":
+                request = Business.Bill.updateConsultationCost(request);
+                request = Business.Bill.viewBill(request);
+                break;
+
             default:
                 response.setStatus(401);
                 request.setAttribute("view", "");

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DatabaseModel;
+package Models.DatabaseModel;
 
 import Utils.Helper;
 import java.sql.Date;
@@ -16,8 +16,7 @@ import java.util.ArrayList;
  * @author david
  */
 public class Patient {
-
-    private int ID;
+private int ID;
     private String name;
     private boolean removable;
 
@@ -50,14 +49,14 @@ public class Patient {
         return removable;
     }
 
-    public ArrayList<Patient> listAllPatients() {
+    public ArrayList<Models.DatabaseModel.Patient> listAllPatients() {
         String query = "SELECT  `patients`.`ID`" 
                              +",`patients`.`name`" 
                       + "FROM  	`patients`" 
                       + "LEFT JOIN `deletedPatient` ON `patients`.`ID` = `deletedPatient`.`patientId` "
                       + "WHERE `deletedPatient`.`patientId` IS NULL;" ;
         
-        ArrayList<Patient> allPatients = new ArrayList<>();
+        ArrayList<Models.DatabaseModel.Patient> allPatients = new ArrayList<>();
         Utils.DBA dba = Helper.getDBA();
         ResultSet rs;
         try {
@@ -79,7 +78,7 @@ public class Patient {
         return allPatients;
     }
     
-    public Patient findPatient(int id){
+    public Models.DatabaseModel.Patient findPatient(int id){
         String query = "SELECT * FROM `patients` WHERE `id` = %d LIMIT 1;";
         Utils.DBA dba = Helper.getDBA();
         Patient p = new Patient();
@@ -107,5 +106,4 @@ public class Patient {
         dba.closeConnections();
 
     }
-
 }

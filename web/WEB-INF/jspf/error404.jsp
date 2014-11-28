@@ -1,3 +1,5 @@
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <div class="row">
     <div class="col-lg-12">
         <h1>Terribly Sorry!</h1>

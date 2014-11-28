@@ -1,2 +1,10 @@
-Something seems to have broken,
-we're terribly sorry.
+<div class="row">
+    <div class="col-lg-12">
+        <h1>Terribly Sorry!</h1>
+        <br />
+                <p>Something seems to have broken,
+            we're terribly sorry.</p>
+        <br />
+        <img src="img/sad_cat.jpg" height="200" width="200" alt="There should be a sad cat here, awkward" class="img-circle" />
+    </div>
+</div>

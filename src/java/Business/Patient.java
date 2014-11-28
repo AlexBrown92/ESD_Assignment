@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Patient {
 
-    public static HttpServletRequest ListPatients(HttpServletRequest request) {
-        DatabaseModel.Patient patient = new DatabaseModel.Patient();
+    public static HttpServletRequest listPatients(HttpServletRequest request) {
+        Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
 
-        ArrayList<DatabaseModel.Patient> patients = patient.listAllPatients();
+        ArrayList<Models.DatabaseModel.Patient> patients = patient.listAllPatients();
 
-        for (DatabaseModel.Patient thisPatient : patients) {
+        for (Models.DatabaseModel.Patient thisPatient : patients) {
             thisPatient.setRemovable(canRemove(thisPatient.getID()));
         }
 
@@ -29,44 +29,44 @@ public class Patient {
         return request;
     }
 
-    public static HttpServletRequest ListPatientBill(HttpServletRequest request) {
-        DatabaseModel.Patient patient = new DatabaseModel.Patient();
+    public static HttpServletRequest listAPatientBills(HttpServletRequest request) {
+        Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
 
-        int patientID = Integer.parseInt(request.getParameter("patient"));
+        int patientID = Integer.parseInt(request.getParameter("patientID"));
 
-        ArrayList<DatabaseModel.Patient> patients = patient.listAllPatients();
+        patient.findPatient(patientID);
 
-        DatabaseModel.Bill bill = new DatabaseModel.Bill();
+        Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
 
-        ArrayList<DatabaseModel.Bill> bills = bill.findUserAllBill(patientID);
+        ArrayList<Models.DatabaseModel.Bill> bills = bill.findUserAllBill(patientID);
 
-        for (DatabaseModel.Bill thisBill : bills) {
-            thisBill.setCost(setBillCost(thisBill.getId()));
+        for (Models.DatabaseModel.Bill thisBill : bills) {
+            thisBill.setTotalCost(setBillTotalCost(thisBill.getId()));
         }
 
-        request.setAttribute("patient", patients.get(0));
+        request.setAttribute("patient", patient);
         request.setAttribute("bills", bills);
         request.setAttribute("view", "patientview.jsp");
 
         return request;
     }
 
-    public static HttpServletRequest RemovePatient(HttpServletRequest request) {
-        int patientID = Integer.parseInt(request.getParameter("patient"));
+    public static HttpServletRequest removePatient(HttpServletRequest request) {
+        int patientID = Integer.parseInt(request.getParameter("patientID"));
 
         if (canRemove(patientID)) {
-            DatabaseModel.Patient patient = new DatabaseModel.Patient();
+            Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
             patient.removePatient(patientID);
         }
-        
-        return ListPatients(request);
+
+        return listPatients(request);
     }
 
     private static boolean canRemove(int patientID) {
         boolean canRemove = false;
 
-        DatabaseModel.Bill bill = new DatabaseModel.Bill();
-        ArrayList<DatabaseModel.Bill> patientOutstandingBills = bill.findUserOutstandingBill(patientID);
+        Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
+        ArrayList<Models.DatabaseModel.Bill> patientOutstandingBills = bill.findUserOutstandingBill(patientID);
 
         if (!patientOutstandingBills.isEmpty()) {
             canRemove = false;
@@ -77,10 +77,9 @@ public class Patient {
         return canRemove;
     }
 
-    private static int setBillCost(int billID) {
-        DatabaseModel.Bill bill = new DatabaseModel.Bill();
-
-        return bill.getBillCost(billID);
+    private static int setBillTotalCost(int billID) {
+        Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
+        return bill.getBillTotalCost(billID);
     }
 
 }

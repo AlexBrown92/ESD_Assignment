@@ -13,8 +13,8 @@ public class User {
      * @param request
      * @return request with a set session and the attribute "include" set to the correct page
      */
-    public static HttpServletRequest Login(HttpServletRequest request) {
-        DatabaseModel.User user  = new DatabaseModel.User();
+    public static HttpServletRequest login(HttpServletRequest request) {
+        Models.DatabaseModel.User user  = new Models.DatabaseModel.User();
         
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -28,7 +28,7 @@ public class User {
             request.setAttribute("view", "homepage.jsp");
         } else {
             request.getSession().invalidate();
-            request.setAttribute("view", "errorgeneric.jspf");
+            request.setAttribute("view", "error404.jspf");
         }
 
         return request;
@@ -72,7 +72,7 @@ public class User {
      * @param request
      * @return 
      */
-    public static HttpServletRequest Logout(HttpServletRequest request) {
+    public static HttpServletRequest logout(HttpServletRequest request) {
 
         request.getSession().invalidate();
         request.setAttribute("include", "login.jsp");

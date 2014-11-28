@@ -1,4 +1,4 @@
-package DatabaseModel;
+package Models.DatabaseModel;
 
 import Utils.DBA;
 import Utils.Helper;
@@ -11,8 +11,7 @@ import java.util.ArrayList;
  * @author david
  */
 public class Medicine {
-
-    private int ID;
+   private int ID;
     private String name;
     private int cost;
 
@@ -55,7 +54,7 @@ public class Medicine {
      * @param cost
      * @return
      */
-    public ArrayList<Medicine> listMedicines() {
+    public static ArrayList<Medicine> listMedicines() {
         String query = "SELECT * FROM medicine";
         DBA dba = Helper.getDBA();
 
@@ -97,7 +96,7 @@ public class Medicine {
         return m;
     }
     
-    public void removePatient(int medicineID) {
+  public void removeMedicine(int medicineID) {
 
         String query = "insert into `deletedMedicine` (`medicineId`, `removalDate`) "
                 + "values ('%d', '%s');";
