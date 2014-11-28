@@ -81,4 +81,14 @@ public class Bill {
 
         return viewmodelbillItemArray;
     }
+
+    public static HttpServletRequest addMedicine(HttpServletRequest request) {
+        int billID = Integer.parseInt(request.getParameter("billID"));
+        int medicineID = Integer.parseInt(request.getParameter("medicineID"));
+        int quantity = Integer.parseInt(request.getParameter("quantity")); 
+        
+        Models.DatabaseModel.BillItem.addBillItem(billID, medicineID, quantity);
+        
+        return request;
+    }
 }

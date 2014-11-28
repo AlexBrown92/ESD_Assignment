@@ -18,17 +18,17 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">Add Medicine</h4>
             </div>
-            <form>
+            <form action="billviewaddmedicine" method="post">
                 <div class="modal-body">
                     <table>
                         <thead></thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <label>Medicine:</label>
+                                    <label for="medicine">Medicine:</label>
                                 </td>
                                 <td>
-                                    <select>
+                                    <select name="medicineID" id="medicine" class="form-control">
                                         <c:forEach items="${medicines}" var="medicine" >
                                             <option value="${medicine.ID}"><c:out value="${medicine.name}"/></option>
                                         </c:forEach>
@@ -37,10 +37,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <label>Quanitiy:</label>
+                                    <label for="quantity">Quantity:</label>
                                 </td>
                                 <td>
-                                    <input type="text" />
+                                    <input type="number" id="quantity" name="quantity" class="form-control" />
                                 </td>
                             </tr>
                         </tbody>
@@ -48,7 +48,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <submit type="button" class="btn btn-primary">Add Medicine</submit>
+                    <button type="submit" class="btn btn-primary">Add Medicine</button>
+                    <input type="hidden" value="<c:out value="${billView.billID}"/>" name="billID" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </form>
