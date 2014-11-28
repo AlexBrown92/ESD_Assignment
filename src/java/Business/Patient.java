@@ -34,18 +34,20 @@ public class Patient {
 
         int patientID = Integer.parseInt(request.getParameter("patientID"));
 
-        patient.findPatient(patientID);
+        patient = patient.findPatient(patientID);
 
-        Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
+        ArrayList<Models.DatabaseModel.Bill> bills = Models.DatabaseModel.Bill.findUserAllBill(patientID);
 
-        ArrayList<Models.DatabaseModel.Bill> bills = bill.findUserAllBill(patientID);
+        ArrayList<Models.ViewModel.Bill> viewBills = new ArrayList<>();
 
         for (Models.DatabaseModel.Bill thisBill : bills) {
-            thisBill.setTotalCost(setBillTotalCost(thisBill.getId()));
+            Models.ViewModel.Bill viewBill = new Models.ViewModel.Bill(thisBill);
+            viewBill.setTotalCost(Models.DatabaseModel.Bill.getBillTotalCost(thisBill.getId()));
+            viewBills.add(viewBill);
         }
 
         request.setAttribute("patient", patient);
-        request.setAttribute("bills", bills);
+        request.setAttribute("bills", viewBills);
         request.setAttribute("view", "patientview.jsp");
 
         return request;
@@ -75,11 +77,6 @@ public class Patient {
         }
 
         return canRemove;
-    }
-
-    private static int setBillTotalCost(int billID) {
-        Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
-        return bill.getBillTotalCost(billID);
     }
 
 }

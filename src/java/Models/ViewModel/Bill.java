@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * @author david
  */
-public class BillView {
+public class Bill {
 
     private int billID;
     private int patientID;
@@ -21,8 +21,26 @@ public class BillView {
     private int consultationCost;
     private int totalCost;
     private ArrayList<Models.ViewModel.BillItem> billItems;
-    private ArrayList<Models.DatabaseModel.Medicine> medicines; 
-    
+    private ArrayList<Models.DatabaseModel.Medicine> medicines;
+
+    public Bill(Models.DatabaseModel.Bill bill, Models.DatabaseModel.Patient patient, int totalCost) {
+
+        this.billID = bill.getId();
+        this.consultationCost = bill.getConsultationCost();
+        this.datePaid = bill.getDatePaid();
+        this.dateCreated = bill.getDateCreated();
+        this.patientID = patient.getID();
+        this.patientName = patient.getName();
+        this.totalCost = totalCost;
+    }
+
+    public Bill(Models.DatabaseModel.Bill bill) {
+        this.billID = bill.getId();
+        this.consultationCost = bill.getConsultationCost();
+        this.datePaid = bill.getDatePaid();
+        this.dateCreated = bill.getDateCreated();
+    }
+
     public int getBillID() {
         return billID;
     }

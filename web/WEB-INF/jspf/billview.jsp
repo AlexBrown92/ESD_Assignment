@@ -3,7 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
-    Models.ViewModel.BillView billView = (Models.ViewModel.BillView) request.getAttribute("billView");
+    Models.ViewModel.Bill billView = (Models.ViewModel.Bill) request.getAttribute("billView");
     ArrayList<Models.ViewModel.BillItem> billItems = billView.getBillItems();
     ArrayList<Models.DatabaseModel.Medicine> medicines = billView.getMedicines();
     pageContext.setAttribute("billView", billView);
