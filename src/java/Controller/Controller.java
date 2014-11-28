@@ -39,15 +39,20 @@ public class Controller extends HttpServlet {
                 request = Business.Patient.listPatients(request);
                 break;
             case "/patientview":
-                request = Business.Patient.listPatientBill(request);
+                request = Business.Patient.listAPatientBills(request);
                 break;
             case "/patientremove":
                 request = Business.Patient.removePatient(request);
                 break;
-            case "/billpay":
+            case "/patientviewpaybill":
                 request = Business.Bill.payBill(request);
+                request = Business.Patient.listAPatientBills(request);
                 break;
             case "/billview":
+                request = Business.Bill.viewBill(request);
+                break;
+            case "/billviewpaybill":
+                request = Business.Bill.payBill(request);
                 request = Business.Bill.viewBill(request);
                 break;
             default:

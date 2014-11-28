@@ -49,6 +49,7 @@
                         view = "/WEB-INF/jspf/" + view;
                     %>  
                     <jsp:include page="<%=view%>"></jsp:include>
+                    
                 </div>
             </div>
         </div>

@@ -28,7 +28,9 @@
         <url-pattern>/patientslist</url-pattern>
         <url-pattern>/patientview</url-pattern>
         <url-pattern>/patientremove</url-pattern>
-        <url-pattern>/billView</url-pattern>
+        <url-pattern>/patientviewpaybill</url-pattern>
+        <url-pattern>/billview</url-pattern>
+        <url-pattern>/billviewpaybill</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

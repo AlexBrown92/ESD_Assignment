@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Bill {
 
- int id;
+    int id;
     int patientId;
     Timestamp dateCreated;
     Timestamp datePaid;
@@ -93,11 +93,11 @@ public class Bill {
     public int getBillTotalCost(int billId) {
         int total = 0;
 
-        String query = "SELECT sum(`cost` * `quantity`) + `consultationCost` as `total` "
-                + "FROM `billItem` "
-                + "INNER JOIN `bill` on `bill`.`billId` = `billItem`.`billId` "
-                + "AND `bill`.`billId` = '%d' "
-                + "INNER JOIN `medicine` on `billItem`.`medicineid` = `medicine`.`id` "
+        String query = "SELECT ifNull(sum(`cost` * `quantity`),0) + `consultationCost` as `total` "
+                + "FROM `bill` "
+                + "LEFT JOIN `billItem` on `bill`.`billId` = `billItem`.`billId` "
+                + "LEFT JOIN `medicine` on `billItem`.`medicineid` = `medicine`.`id` "
+                + "WHERE `bill`.`billId` = '%d' "
                 + "group by `bill`.`billid`;";
 
         DBA dba = Helper.getDBA();
@@ -110,7 +110,7 @@ public class Bill {
                 while (rs.next()) {
                     total = rs.getInt("total");
                 }
-                
+
                 rs.close();
 
             }
@@ -235,6 +235,16 @@ public class Bill {
         }
         return this;
     }
-    
-    
+
+    public void payBill(int billID) {
+        String query = "UPDATE `bill` "
+                + "SET `bill`.`datePaid` = now() "
+                + "WHERE `billId` = '%d';";
+        Utils.DBA dba = Helper.getDBA();
+
+        dba.executeUpdate(String.format(query, billID));
+        dba.closeConnections();
+
+    }
+
 }

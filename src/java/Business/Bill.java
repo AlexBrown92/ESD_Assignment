@@ -7,7 +7,9 @@ package Business;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +21,9 @@ public class Bill {
 
     public static HttpServletRequest payBill(HttpServletRequest request) {
         int billID = Integer.parseInt(request.getParameter("billID"));
+        Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
+
+        bill.payBill(billID);
 
         return request;
     }
@@ -32,50 +37,48 @@ public class Bill {
         bill = bill.findBill(billID);
         bill.setTotalCost(bill.getBillTotalCost(billID));
 
-        
         Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
         patient = patient.findPatient(bill.getPatientId());
-        
+
         Models.ViewModel.BillView billView = new Models.ViewModel.BillView();
 
         billView.setBillID(billID);
         billView.setConsultationCost(bill.getConsultationCost());
         billView.setDateCreated(new Date(bill.getDateCreated().getTime()));
-        
-        if(bill.getDatePaid() != null){
+
+        if (bill.getDatePaid() != null) {
             billView.setDatePaid(new Date(bill.getDatePaid().getTime()));
-        }
-        else {
+        } else {
             billView.setDatePaid(null);
         }
-        
+
         billView.setPatientID(patient.getID());
         billView.setPatientName(patient.getName());
         billView.setTotalCost(bill.getBillTotalCost(billID));
-        
+
         ArrayList<Models.DatabaseModel.BillItem> billItems = Models.DatabaseModel.BillItem.listBillItems(bill.getId());
         ArrayList<Models.DatabaseModel.Medicine> medicines = Models.DatabaseModel.Medicine.listMedicines();
         billView.setMedicines(medicines);
         billView.setBillItems(getBillItems(billItems, medicines));
-        
-        request.setAttribute("billView", billView); 
+
+        request.setAttribute("billView", billView);
         request.setAttribute("view", "billview.jsp");
 
         return request;
     }
-    
-    private static ArrayList<Models.ViewModel.BillItem> getBillItems(ArrayList<Models.DatabaseModel.BillItem> billItems, ArrayList<Models.DatabaseModel.Medicine> medicines){
-        
+
+    private static ArrayList<Models.ViewModel.BillItem> getBillItems(ArrayList<Models.DatabaseModel.BillItem> billItems, ArrayList<Models.DatabaseModel.Medicine> medicines) {
+
         ArrayList<Models.ViewModel.BillItem> viewmodelbillItemArray = new ArrayList<>();
-        for(Models.DatabaseModel.BillItem billItem : billItems){
-            for(Models.DatabaseModel.Medicine medicine : medicines){
-                if(billItem.getMedicineId() == medicine.getID()){
-                    viewmodelbillItemArray.add(new Models.ViewModel.BillItem(billItem,medicine));
+        for (Models.DatabaseModel.BillItem billItem : billItems) {
+            for (Models.DatabaseModel.Medicine medicine : medicines) {
+                if (billItem.getMedicineId() == medicine.getID()) {
+                    viewmodelbillItemArray.add(new Models.ViewModel.BillItem(billItem, medicine));
                     break;
                 }
             }
         }
-        
-        return viewmodelbillItemArray; 
+
+        return viewmodelbillItemArray;
     }
 }

@@ -29,10 +29,10 @@ public class Patient {
         return request;
     }
 
-    public static HttpServletRequest listPatientBill(HttpServletRequest request) {
+    public static HttpServletRequest listAPatientBills(HttpServletRequest request) {
         Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
 
-        int patientID = Integer.parseInt(request.getParameter("patient"));
+        int patientID = Integer.parseInt(request.getParameter("patientID"));
 
         patient.findPatient(patientID);
 
@@ -52,7 +52,7 @@ public class Patient {
     }
 
     public static HttpServletRequest removePatient(HttpServletRequest request) {
-        int patientID = Integer.parseInt(request.getParameter("patient"));
+        int patientID = Integer.parseInt(request.getParameter("patientID"));
 
         if (canRemove(patientID)) {
             Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();

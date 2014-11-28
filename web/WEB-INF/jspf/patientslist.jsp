@@ -26,7 +26,7 @@
                         <td>
                             <form action="patientview" method="post">
                                 <input type="submit" value="View Details" class="btn btn-sm btn-primary"/>
-                                <input type="hidden" value="${patient.ID}" name="patient"/>
+                                <input type="hidden" value="${patient.ID}" name="patientID"/>
                             </form>
                         </td>
                         <td>
@@ -36,7 +36,7 @@
                                            disabled
                                        </c:if>
                                        " />
-                                <input type="hidden" value="${patient.ID}" name="patient" />
+                                <input type="hidden" value="${patient.ID}" name="patientID" />
                             </form>
                         </td>
                     </tr>

@@ -172,12 +172,14 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <input type="button" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success 
+            <form action="billviewpaybill" method="post" style="display:inline">
+            <input type="submit" value="&nbsp;Pay&nbsp;" class="btn btn-sm btn-success 
             <c:if test="${billView.datePaid != null}">
                 disabled
             </c:if>>
             "/>
-
+            <input type="hidden" name="billID" value="${billView.billID}" />
+            </form>
         <button type="button" class="btn btn-sm btn-primary 
                 <c:if test="${billView.datePaid != null}">
                     disabled
