@@ -3,7 +3,9 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     ArrayList<Models.DatabaseModel.Medicine> medicines = (ArrayList<Models.DatabaseModel.Medicine>) request.getAttribute("medicines");
+    boolean addmedicine = (boolean)request.getAttribute("addmedicine");
     pageContext.setAttribute("medicines", medicines);
+    pageContext.setAttribute("addmedicine", addmedicine);
 %>
 
 <div class="modal fade" id="addMedicineModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -138,6 +140,11 @@
 </div>
 
 <script type="text/javascript">
+    <c:if test="${addmedicine == true}">
+    $(function () {
+        $("#addMedicineModal").modal("show");
+    });
+    </c:if>
     function editMedicine(medicineID, medicineName, medicineCost) {
         $("#editMedicineID").val(medicineID);
         $("#editMedicineName").val(medicineName);

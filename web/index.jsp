@@ -17,6 +17,9 @@
         <title> Dr Fatal | Management Information System</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/simple-sidebar.css" rel="stylesheet">
+
+        <script src="js/jquery-2.1.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
         <div id="wrapper">
@@ -49,11 +52,9 @@
                         view = "/WEB-INF/jspf/" + view;
                     %>  
                     <jsp:include page="<%=view%>"></jsp:include>
-                    
+
                 </div>
             </div>
         </div>
-        <script src="js/jquery-2.1.1.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
     </body>
 </html>

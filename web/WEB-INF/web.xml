@@ -40,7 +40,7 @@
         <url-pattern>/medicinelist</url-pattern>
         <url-pattern>/medicinelistupdatemedicine</url-pattern>
         <url-pattern>/medicinelistaddmedicine</url-pattern>
-        
+        <url-pattern>/addmedicine</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

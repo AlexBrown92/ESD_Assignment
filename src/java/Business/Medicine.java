@@ -19,6 +19,7 @@ public class Medicine {
         ArrayList<Models.DatabaseModel.Medicine> medicines = Models.DatabaseModel.Medicine.listMedicines();
 
         request.setAttribute("medicines", medicines);
+        request.setAttribute("addmedicine", false);
         request.setAttribute("view", "medicinelist.jsp");
         return request;
     }
@@ -27,17 +28,17 @@ public class Medicine {
         int medicineID = Integer.parseInt(request.getParameter("medicineID"));
         int cost = Integer.parseInt(request.getParameter("cost"));
         String name = request.getParameter("name");
-        
+
         Models.DatabaseModel.Medicine.updateMedicine(medicineID, cost, name);
 
         return request;
 
     }
-    
+
     public static HttpServletRequest createMedicine(HttpServletRequest request) {
         int cost = Integer.parseInt(request.getParameter("cost"));
         String name = request.getParameter("name");
-        
+
         Models.DatabaseModel.Medicine.createMedicine(cost, name);
 
         return request;
