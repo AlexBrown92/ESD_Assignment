@@ -15,15 +15,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Bill {
 
-    public static HttpServletRequest payBill(HttpServletRequest request) {
-        int billID = Integer.parseInt(request.getParameter("billID"));
-        Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
-
-        bill.payBill(billID);
-
-        return request;
-    }
-
     public static HttpServletRequest viewBill(HttpServletRequest request) {
 
         int billID = Integer.parseInt(request.getParameter("billID"));
@@ -96,6 +87,26 @@ public class Bill {
 
         return request;
 
+    }
+
+    public static HttpServletRequest updateMedicine(HttpServletRequest request) {
+        int billID = Integer.parseInt(request.getParameter("billID"));
+        int medicineID = Integer.parseInt(request.getParameter("medicineID"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        
+        Models.DatabaseModel.BillItem.updateBillItem(billID, medicineID, quantity);
+
+        return request;
+
+    }
+
+    public static HttpServletRequest payBill(HttpServletRequest request) {
+        int billID = Integer.parseInt(request.getParameter("billID"));
+        Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
+
+        bill.payBill(billID);
+
+        return request;
     }
 
     public static HttpServletRequest updateConsultationCost(HttpServletRequest request) {

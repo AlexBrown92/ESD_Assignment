@@ -11,7 +11,7 @@
     pageContext.setAttribute("medicines", medicines);
 %>
 
-<div class="modal fade" id="addMedicine" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="addMedicineModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -56,6 +56,49 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="editMedicine" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit Medicine</h4>
+            </div>
+            <form action="billvieweditmedicine" method="post">
+                <div class="modal-body">
+                    <table>
+                        <thead></thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="medicine">Medicine:</label>
+                                </td>
+                                <td>
+                                    <input type="text" id="editMedicineName" class="form-control" disabled />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="editQuantity">Quantity:</label>
+                                </td>
+                                <td>
+                                    <input id="editQuantity" type="number"  name="quantity" class="form-control" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update Medicine</button>
+                    <input type="hidden" value="<c:out value="${billView.billID}"/>" name="billID" />
+                    <input type="hidden" name="medicineID" id="editMedicineID" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>                    
 
 <div class="page-header">
     <h1 style="display: inline">Bill:&nbsp;<small><c:out value="${billView.billID}"/></small></h1>
@@ -138,38 +181,36 @@
             <tbody>
                 <c:choose>
                     <c:when test="${empty billItems}">
-                    <td colspan="6" style="text-align:center"><h4><strong>No items</strong></h4></td>
-                            </c:when>
-                            <c:otherwise>
-
-
-                    <c:forEach items="${billItems}" var="billItem">
-                        <tr>
-                            <td><c:out value="${billItem.name}"/></td>
-                            <td><c:out value="${billItem.quantity}" /></td>
-                            <td><c:out value="${billItem.cost}" /></td>
-                            <td><c:out value="${billItem.total}"/></td>
-                            <td><input type="button" value="Edit" class="btn btn-sm btn-primary
-                                       <c:if test="${billView.datePaid != null}">
-                                           disabled
-                                       </c:if>
-                                       "></td>
-                            <td>
-                                <form action="billviewremove" method="post">
-                                    <input type="submit" value="Remove" class="btn btn-sm btn-danger
+                        <tr><td colspan="6" style="text-align:center"><h4><strong>No items</strong></h4></td></tr>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach items="${billItems}" var="billItem">
+                            <tr>
+                                <td><c:out value="${billItem.name}"/></td>
+                                <td><c:out value="${billItem.quantity}" /></td>
+                                <td><c:out value="${billItem.cost}" /></td>
+                                <td><c:out value="${billItem.total}"/></td>
+                                <td><input type="button" value="Edit" class="btn btn-sm btn-primary
                                            <c:if test="${billView.datePaid != null}">
                                                disabled
                                            </c:if>
-                                           "/>
-                                    <input type="hidden" value="<c:out value="${billItem.billID}"/>" name="billID"/>
-                                    <input type="hidden" value="<c:out value="${billItem.medicineID}"/>" name="medicineID"/>
+                                           " onclick="populateEditMedicine('${billItem.name}', '${billItem.quantity}', '${billItem.medicineID}')"></td>
+                                <td>
+                                    <form action="billviewremove" method="post">
+                                        <input type="submit" value="Remove" class="btn btn-sm btn-danger
+                                               <c:if test="${billView.datePaid != null}">
+                                                   disabled
+                                               </c:if>
+                                               "/>
+                                        <input type="hidden" value="<c:out value="${billItem.billID}"/>" name="billID"/>
+                                        <input type="hidden" value="<c:out value="${billItem.medicineID}"/>" name="medicineID"/>
 
-                                </form>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </tbody>
             <tfoot>
                 <tr>
@@ -195,9 +236,17 @@
                 <c:if test="${billView.datePaid != null}">
                     disabled
                 </c:if>
-                " data-toggle="modal" data-target="#addMedicine">
+                " data-toggle="modal" data-target="#addMedicineModal">
             Add Medicine
         </button>
     </div>
 </div>
 
+<script type="text/javascript">
+    function populateEditMedicine(medicineName, quantity, medicineID) {
+        $("#editMedicineName").val(medicineName);
+        $("#editQuantity").val(quantity);
+        $("#editMedicineID").val(medicineID);
+        $("#editMedicine").modal("show");
+    }
+</script>
