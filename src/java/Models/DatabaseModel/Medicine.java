@@ -96,7 +96,7 @@ public class Medicine {
         return m;
     }
     
-    public void removePatient(int medicineID) {
+  public void removeMedicine(int medicineID) {
 
         String query = "insert into `deletedMedicine` (`medicineId`, `removalDate`) "
                 + "values ('%d', '%s');";
