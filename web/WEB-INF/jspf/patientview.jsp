@@ -3,7 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     Models.DatabaseModel.Patient patient = (Models.DatabaseModel.Patient) request.getAttribute("patient");
-    ArrayList<Models.DatabaseModel.Bill> bills = (ArrayList<Models.DatabaseModel.Bill>) request.getAttribute("bills");
+    ArrayList<Models.ViewModel.Bill> bills = (ArrayList<Models.ViewModel.Bill>) request.getAttribute("bills");
     
     pageContext.setAttribute("bills", bills);
     pageContext.setAttribute("patient", patient);
@@ -27,7 +27,7 @@
             <tbody>
                 <c:forEach items="${bills}" var="bill">
                     <tr>
-                        <td>${bill.id}</td>
+                        <td>${bill.billID}</td>
                         <td>${bill.totalCost}</td>
                         <td>
                             <c:set var="billDate" value="${bill.datePaid}" />
@@ -36,15 +36,15 @@
                         <td>
                             <form action="billview" method="post">
                                 <input type="submit" value="View Details" class="btn btn-sm btn-primary"/>
-                                <input type="hidden" value="${bill.id}" name="billID"/>
+                                <input type="hidden" value="${bill.billID}" name="billID"/>
                             </form>
                         </td>
                         <td>
                             <form action="patientviewpaybill" method="post">
                                 <c:if test="${bill.datePaid == null}">
                                     <input type="submit" value="Pay" class="btn btn-sm btn-success"/>
-                                    <input type="hidden" value="${bill.id}" name="billID" />
-                                    <input type="hidden" value="${bill.patientId}" name="patientID"/> 
+                                    <input type="hidden" value="${bill.billID}" name="billID" />
+                                    <input type="hidden" value="${bill.patientID}" name="patientID"/> 
                                 </c:if>
                             </form>
                         </td>

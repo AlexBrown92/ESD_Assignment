@@ -22,29 +22,15 @@ public class Bill {
         Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
 
         bill = bill.findBill(billID);
-        bill.setTotalCost(bill.getBillTotalCost(billID));
 
         Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
         patient = patient.findPatient(bill.getPatientId());
 
-        Models.ViewModel.BillView billView = new Models.ViewModel.BillView();
-
-        billView.setBillID(billID);
-        billView.setConsultationCost(bill.getConsultationCost());
-        billView.setDateCreated(new Date(bill.getDateCreated().getTime()));
-
-        if (bill.getDatePaid() != null) {
-            billView.setDatePaid(new Date(bill.getDatePaid().getTime()));
-        } else {
-            billView.setDatePaid(null);
-        }
-
-        billView.setPatientID(patient.getID());
-        billView.setPatientName(patient.getName());
-        billView.setTotalCost(bill.getBillTotalCost(billID));
+        Models.ViewModel.Bill billView = new Models.ViewModel.Bill(bill, patient, bill.getBillTotalCost(billID));
 
         ArrayList<Models.DatabaseModel.BillItem> billItems = Models.DatabaseModel.BillItem.listBillItems(bill.getId());
         ArrayList<Models.DatabaseModel.Medicine> medicines = Models.DatabaseModel.Medicine.listMedicines();
+
         billView.setMedicines(medicines);
         billView.setBillItems(getBillItems(billItems, medicines));
 
@@ -93,7 +79,7 @@ public class Bill {
         int billID = Integer.parseInt(request.getParameter("billID"));
         int medicineID = Integer.parseInt(request.getParameter("medicineID"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
-        
+
         Models.DatabaseModel.BillItem.updateBillItem(billID, medicineID, quantity);
 
         return request;
@@ -117,5 +103,26 @@ public class Bill {
 
         return request;
 
+    }
+
+    public static HttpServletRequest listBills(HttpServletRequest request) {
+        ArrayList<Models.ViewModel.Bill> viewBills = new ArrayList<>();
+        ArrayList<Models.DatabaseModel.Bill> bills = Models.DatabaseModel.Bill.listBills();
+
+        for (Models.DatabaseModel.Bill bill : bills) {
+            Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
+
+            int totalCost = Models.DatabaseModel.Bill.getBillTotalCost(bill.getId());
+
+            patient = patient.findPatient(bill.getPatientId());
+
+            Models.ViewModel.Bill viewBill = new Models.ViewModel.Bill(bill, patient, totalCost);
+
+            viewBills.add(viewBill);
+        }
+        request.setAttribute("bills", viewBills);
+        request.setAttribute("view", "billlist.jsp");
+
+        return request;
     }
 }

@@ -1,8 +1,11 @@
 <li>
+    <a href="billlist">List all Bills</a> 
+</li>
+<li>
     <a href="patientslist">List all Patients</a>
 </li>
 <li>
-    <a href="#">List all Medicines</a>
+    <a href="medicinelist">List all Medicines</a>
 </li>
 <li>
     <a href="#">Add new Bill</a>

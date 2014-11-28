@@ -16,7 +16,6 @@ public class Bill {
     Timestamp dateCreated;
     Timestamp datePaid;
     int consultationCost;
-    int totalCost;
 
     public Bill() {
         this.id = 0;
@@ -74,12 +73,43 @@ public class Bill {
         this.consultationCost = consultationCost;
     }
 
-    public int getTotalCost() {
-        return totalCost;
-    }
+    public static ArrayList<Models.DatabaseModel.Bill> listBills() {
+        String query = "SELECT `bill`.`billId`, "
+                + "     `bill`.`patientId`, "
+                + "     `bill`.`dateCreated`, "
+                + "     `bill`.`datePaid`, "
+                + "     `bill`.`consultationCost` "
+                + " FROM `bill` ;";
 
-    public void setTotalCost(int cost) {
-        this.totalCost = cost;
+        DBA dba = Helper.getDBA();
+
+        ArrayList<Models.DatabaseModel.Bill> listOfBills = new ArrayList<>();
+        try {
+            ResultSet rs = dba.executeQuery(String.format(query));
+
+            if (rs != null) {
+
+                while (rs.next()) {
+                    Models.DatabaseModel.Bill newBill = new Models.DatabaseModel.Bill();
+
+                    newBill.setId(rs.getInt("billId"));
+                    newBill.setPatientId(rs.getInt("patientId"));
+                    newBill.setDateCreated(rs.getTimestamp("dateCreated"));
+                    newBill.setDatePaid(rs.getTimestamp("datePaid"));
+                    newBill.setConsultationCost(rs.getInt("consultationCost"));
+
+                    listOfBills.add(newBill);
+                }
+
+                rs.close();
+            }
+            dba.closeConnections();
+
+        } catch (SQLException sqlEx) {
+            dba.closeConnections();
+            Helper.logException(sqlEx);
+        }
+        return listOfBills;
     }
 
     public ArrayList<Models.DatabaseModel.Bill> findUserPaidBill(int patientId) {
@@ -90,7 +120,7 @@ public class Bill {
         return findUserBill(patientId, true);
     }
 
-    public int getBillTotalCost(int billId) {
+    public static int getBillTotalCost(int billId) {
         int total = 0;
 
         String query = "SELECT ifNull(sum(`cost` * `quantity`),0) + `consultationCost` as `total` "
@@ -123,7 +153,7 @@ public class Bill {
         return total;
     }
 
-    public ArrayList<Models.DatabaseModel.Bill> findUserAllBill(int patientId) {
+    public static ArrayList<Models.DatabaseModel.Bill> findUserAllBill(int patientId) {
         String query = "SELECT `bill`.`billId`, "
                 + "     `bill`.`patientId`, "
                 + "     `bill`.`dateCreated`, "
