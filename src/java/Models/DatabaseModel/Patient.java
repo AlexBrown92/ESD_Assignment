@@ -92,6 +92,14 @@ private int ID;
         }
         return p;
     }
+    
+    public int addPatient(String name){
+        String query = "INSERT INTO `patient` (`name`) VALUES (%s);";
+        Utils.DBA dba = Helper.getDBA();
+        int patientId = dba.executeUpdate(String.format(query, name));
+        dba.closeConnections();
+        return patientId;
+    }
 
     public void removePatient(int patientID) {
 

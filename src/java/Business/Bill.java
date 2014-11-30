@@ -14,6 +14,32 @@ import javax.servlet.http.HttpServletRequest;
  * @author david
  */
 public class Bill {
+    
+    public static HttpServletRequest addBill(HttpServletRequest request){
+        Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
+        Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
+        int patientID;
+        if (request.getParameter("patientId") == null){
+            patientID = patient.addPatient(request.getParameter("patientName"));
+        } else {
+            patientID = Integer.parseInt(request.getParameter("patientId"));
+        }
+        patient = patient.findPatient(patientID);
+        
+        int billID = bill.addBill(patientID, Integer.parseInt(request.getParameter("consultationCost")));
+        bill = bill.findBill(billID);
+        Models.ViewModel.Bill billView = new Models.ViewModel.Bill(bill, patient, bill.getBillTotalCost(billID));
+
+        ArrayList<Models.DatabaseModel.BillItem> billItems = Models.DatabaseModel.BillItem.listBillItems(bill.getId());
+        ArrayList<Models.DatabaseModel.Medicine> medicines = Models.DatabaseModel.Medicine.listMedicines();
+
+        billView.setMedicines(medicines);
+        billView.setBillItems(getBillItems(billItems, medicines));
+
+        request.setAttribute("billView", billView);
+        request.setAttribute("view", "billview.jsp");
+        return request;
+    }
 
     public static HttpServletRequest viewBill(HttpServletRequest request) {
 
