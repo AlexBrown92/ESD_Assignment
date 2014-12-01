@@ -93,6 +93,15 @@ public class Controller extends HttpServlet {
                 request = Business.Medicine.medicineList(request);
                 request.setAttribute("addmedicine", true);
                 break;
+            case "/newpatient":
+                request.setAttribute("view", "newpatient.jsp");
+                break;
+            case "/newbill":
+                request = Business.Bill.listPatients(request);
+                break;
+            case "/createbill":
+                request = Business.Bill.addBill(request);
+                break;
             default:
                 response.setStatus(401);
                 request.setAttribute("view", "");

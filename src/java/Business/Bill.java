@@ -151,4 +151,15 @@ public class Bill {
 
         return request;
     }
+    
+    public static HttpServletRequest listPatients(HttpServletRequest request){
+        Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
+
+        ArrayList<Models.DatabaseModel.Patient> patients = patient.listAllPatients();
+
+        request.setAttribute("patients", patients);
+        request.setAttribute("view", "newbill.jsp");
+
+        return request;
+    }
 }
