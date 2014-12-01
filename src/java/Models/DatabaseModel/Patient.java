@@ -94,7 +94,7 @@ private int ID;
     }
     
     public int addPatient(String name){
-        String query = "INSERT INTO `patient` (`name`) VALUES (%s);";
+        String query = "INSERT INTO `patients` (`name`) VALUES ('%s');";
         Utils.DBA dba = Helper.getDBA();
         int patientId = dba.executeUpdate(String.format(query, name));
         dba.closeConnections();
