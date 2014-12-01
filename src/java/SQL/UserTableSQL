@@ -1,8 +1,8 @@
-create table User (
-	ID int primary key auto_increment not null
+CREATE TABLE User (
+	userID int PRIMARY KEY AUTO_INCREMENT NOT NULL
 	,UserName varchar(50) 
 	,Password varchar(50)
 );
 
-insert into User(UserName, Password) 
-values ("doctor", "doctor");
+INSERT INTO User(UserName, Password) 
+VALUES ("doctor", "doctor");

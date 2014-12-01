@@ -41,6 +41,9 @@
         <url-pattern>/medicinelistupdatemedicine</url-pattern>
         <url-pattern>/medicinelistaddmedicine</url-pattern>
         <url-pattern>/addmedicine</url-pattern>
+        <url-pattern>/newbill</url-pattern>
+        <url-pattern>/newpatient</url-pattern>
+        <url-pattern>/createbill</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

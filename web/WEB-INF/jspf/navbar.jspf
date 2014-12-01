@@ -8,10 +8,10 @@
     <a href="medicinelist">List all Medicines</a>
 </li>
 <li>
-    <a href="#">Add new Bill</a>
+    <a href="newbill">Add new Bill</a>
 </li>
 <li>
-    <a href="#">Add new Patient</a>
+    <a href="newpatient">Add new Patient</a>
 </li>
 <li>
     <a href="addmedicine">Add new Medicine</a>

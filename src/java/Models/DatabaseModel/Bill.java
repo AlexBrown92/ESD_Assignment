@@ -296,8 +296,7 @@ public class Bill {
         Utils.DBA dba = Helper.getDBA();
 
         java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
-
-        int billID = dba.executeUpdate(String.format(query, patientID, date.toString()));
+        int billID = dba.executeUpdate(String.format(query, patientID, date.toString(), consultationCost));
         dba.closeConnections();
 
         return billID;
