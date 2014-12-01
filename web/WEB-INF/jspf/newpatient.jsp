@@ -3,7 +3,7 @@
 </div>
 <div class="panel panel-default">
     <div class="panel-body">
-        <form action="/createbill" method="post">
+        <form action="createbill" method="post">
             <div class="form-group">
                 <label for="patientName">Patient Name</label>
                 <input name="patientName" type="text" class="form-control" id="patientName" placeholder="Enter name">

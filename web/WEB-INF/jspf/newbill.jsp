@@ -10,7 +10,7 @@
 </div>
 <div class="panel panel-default">
     <div class="panel-body">
-        <form action="/createbill" method="post">
+        <form action="createbill" method="post">
             <div class="form-group">
                 <label for="patientName">Patient</label>
                 <select name="patientID" id="ddMedicine" class="form-control">

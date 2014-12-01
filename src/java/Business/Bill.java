@@ -19,10 +19,10 @@ public class Bill {
         Models.DatabaseModel.Bill bill = new Models.DatabaseModel.Bill();
         Models.DatabaseModel.Patient patient = new Models.DatabaseModel.Patient();
         int patientID;
-        if (request.getParameter("patientId") == null){
+        if (request.getParameter("patientID") == null){
             patientID = patient.addPatient(request.getParameter("patientName"));
         } else {
-            patientID = Integer.parseInt(request.getParameter("patientId"));
+            patientID = Integer.parseInt(request.getParameter("patientID"));
         }
         patient = patient.findPatient(patientID);
         
