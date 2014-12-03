@@ -8,7 +8,7 @@
 <li>
     <div class="form-group col-sm-12"> 
         <label for="password"> <font face = "verdana"> Password </font> </label>
-    <input type="text" name="password" id="password" class="form-control"/>
+    <input type="password" name="password" id="password" class="form-control"/>
     </div>
 </li>
 <li>
