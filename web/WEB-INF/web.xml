@@ -12,6 +12,14 @@
         <param-name>dbPassword</param-name>
         <param-value>app</param-value>
     </context-param>
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>Filters.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/login</url-pattern>
+    </filter-mapping>
     <listener>
         <description>ServletContextListener</description>
         <listener-class>Utils.Helper</listener-class>
@@ -31,7 +39,7 @@
         <url-pattern>/patientviewpaybill</url-pattern>
         <url-pattern>/billview</url-pattern>
         <url-pattern>/billviewpaybill</url-pattern>
-        <url-pattern>/billviewaddmedicine</url-pattern> 
+        <url-pattern>/billviewaddmedicine</url-pattern>
         <url-pattern>/billviewremove</url-pattern>
         <url-pattern>/billviewconsultationcost</url-pattern>
         <url-pattern>/billvieweditmedicine</url-pattern>
